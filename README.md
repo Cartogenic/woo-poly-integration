@@ -1,15 +1,10 @@
 # [Wordpress  WooCommerce Polylang Integration ](https://github.com/hyyan/woo-poly-integration/)
 
-[![Project Status](http://stillmaintained.com/hyyan/woo-poly-integration.png)](https://github.com/decarvalhoaa/woo-poly-integration)
-[![Latest Stable Version](https://poser.pugx.org/hyyan/woo-poly-integration/v/stable.svg)](https://packagist.org/packages/hyyan/woo-poly-integration)
-[![License](https://poser.pugx.org/hyyan/woo-poly-integration/license.svg)](https://packagist.org/packages/hyyan/woo-poly-integration)
-
-
-This plugin makes it possible to run multilingual e-commerce sites using
-WooCommerce and Polylang.
+This plugin makes it possible to run multilingual e-commerce sites using WooCommerce and Polylang.
 
 This is a fork of the [Hyyan WooCommerce Polylang Integration](https://wordpress.org/plugins/woo-poly-integration/)
-by Hyyan that is no longer mantained since v0.25. Credit goes entirelly to Hyyan.
+develop by Hyyan that is no longer mantained since v0.25. Credit goes entirely
+to Hyyan for this great plugin.
 
 ## Features
 
