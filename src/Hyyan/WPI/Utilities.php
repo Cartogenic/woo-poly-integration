@@ -201,4 +201,24 @@ final class Utilities
         }
     }
 
+    /**
+     * Check WooCommerce version
+     *
+     * Check if you are running a specified WooCommerce version (or higher)
+     *
+     * @param string    $version    version to check agains. (Default: 2.6)
+     *
+     * @return boolean  true if running version is equal or higher, false otherwise
+     */
+    public static function woocommerce_version_check( $version = '2.6' ) {
+
+        global $woocommerce;
+
+        if( version_compare( $woocommerce->version, $version, ">=" ) ) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

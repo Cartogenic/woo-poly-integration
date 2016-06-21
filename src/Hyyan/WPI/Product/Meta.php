@@ -40,7 +40,7 @@ class Meta
     /**
      * Sync porduct meta
      *
-     * @return false if the current post type is not "porduct"
+     * @return false if the current post type is not "product"
      */
     public function syncProductsMeta()
     {
@@ -60,13 +60,12 @@ class Meta
          * Disable editing product meta for translation
          *
          * if the "post" is defined in $_GET then we should check if the current
-         * porduct has a translation and it is the same as the default translation
-         * lang defined in polylang then porduct meta editing must by enabled
+         * product has a translation and it is the same as the default translation
+         * lang defined in polylang then product meta editing must by enabled
          *
          * if the "new_lang" is defined or if the current page is the "edit"
-         * page then porduct meta editing must by disabled
+         * page then product meta editing must by disabled
          */
-
         if (isset($_GET['post'])) {
             $ID = absint($_GET['post']);
             $disable = $ID && (pll_get_post_language($ID) != pll_default_language());
@@ -146,8 +145,8 @@ class Meta
             ),
             // shipping
             'shipping' => array(
-                'name' => __('ShippingClass Metas', 'woo-poly-integration'),
-                'desc' => __('ShippingClass Metas', 'woo-poly-integration'),
+                'name' => __('Shipping Metas', 'woo-poly-integration'),
+                'desc' => __('Shipping Metas', 'woo-poly-integration'),
                 'metas' => array(
                     '_weight',
                     '_length',
@@ -181,9 +180,7 @@ class Meta
         }
 
         foreach ($default as $ID => $value) {
-            $metas = array_merge($metas, Settings::getOption(
-                            $ID, MetasList::getID(), $value['metas']
-            ));
+            $metas = array_merge( $metas, Settings::getOption( $ID, MetasList::getID(), $value['metas'] ) );
         }
 
         return array_values($metas);
@@ -239,14 +236,14 @@ class Meta
     }
 
     /**
-     * Sync the porduct select list
+     * Sync the product select list
      *
      * @param integer $ID product type
      */
     protected function syncSelectedproductType($ID = null)
     {
         /*
-         * First we add save_post action to save the porduct type
+         * First we add save_post action to save the product type
          * as post meta
          *
          * This is step is important so we can get the right product type

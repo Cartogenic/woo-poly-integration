@@ -10,6 +10,9 @@
 
 namespace Hyyan\WPI\Admin;
 
+use Hyyan\WPI\Utilities,
+    Hyyan\WPI\Admin\Settings;
+
 /**
  * Features
  *
@@ -48,7 +51,7 @@ class Features extends AbstractSettings
      */
     protected function doGetFields()
     {
-        return array(
+        $fields = array(
             array(
                 'name' => 'fields-locker',
                 'type' => 'checkbox',
@@ -76,7 +79,7 @@ class Features extends AbstractSettings
                 'default' => 'on',
                 'label' => __('Reports', 'woo-poly-integration'),
                 'desc' => __(
-                        'Enable reports langauge filtering and combining'
+                        'Enable reports language filtering and combining'
                         , 'woo-poly-integration'
                 )
             ),
@@ -134,13 +137,31 @@ class Features extends AbstractSettings
                 'name' => 'shipping-class',
                 'type' => 'checkbox',
                 'default' => 'off',
-                'label' => __('Translate ShippingClass', 'woo-poly-integration'),
+                'label' => __('Translate Shipping Classes', 'woo-poly-integration'),
                 'desc' => __(
-                        'Enable ShippingClass translations'
+                        'Enable Shipping Classes translations (supported only for WooCommerce versions < 2.6)'
                         , 'woo-poly-integration'
                 )
             )
         );
+
+        // Shipping Class translation is not supported after WooCommerce 2.6
+        // Note: WooCommerce change the Shipping Class interface and is no longer
+        // using the same actions and filters as WordPress. Therefore PolylanTo
+        // can't display the languages columns and metabox for custom post types
+        // and taxonomies.
+        // TODO:
+        // 1. understand how to enable again Shipping Classes translation
+        // 2. Add some java script to disable the option using Utilities::jsScriptWrapper()
+        if ( Utilities::woocommerce_version_check( '2.6' ) ) {
+            if ( 'off' !== Settings::getOption( 'shipping-class', Features::getID() ) ) {
+                $settings = get_option( Features::getID() );
+                $settings['shipping-class'] =  'off';
+                update_option( Features::getID(), $settings );
+            }
+        }
+
+        return $fields;
     }
 
 }

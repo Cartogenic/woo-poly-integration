@@ -187,7 +187,7 @@ class Variable
     }
 
     /**
-     * Handle variation limitation about defualt language
+     * Handle variation limitation about default language
      *
      * @global string $pagenow current page name
      *
