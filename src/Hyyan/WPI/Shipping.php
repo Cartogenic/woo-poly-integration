@@ -42,16 +42,66 @@ class Shipping
     */
     private function get_active_shipping_methods() {
 
-        $shipping_methods = WC()->shipping->load_shipping_methods();
         $active_methods = array();
 
-        foreach ( $shipping_methods as $id => $shipping_method ) {
+        if ( Utilities::woocommerce_version_check( '2.6' ) ) {
+            //  WooCommerce 2.6 intoduces the concept of Shipping Zones
+
+            // Format:  $shipping_methods[zone_name_method_id] => shipping_method_object
+            // where zone_name is e.g. domestic, europe, rest_of_the_world, and
+            // methods_id is e.g. flat_rate, free_shiping, local_pickup, etc
+            $shipping_methods = $this->get_zones_shipping_methods();
+
+        } else {
+
+            // Format:  $shipping_methods[method_id] => shipping_method_object
+            // where methods_id is e.g. flat_rate, free_shiping, local_pickup, etc
+            $shipping_methods = WC()->shipping->load_shipping_methods();
+
+        }
+
+       foreach ( $shipping_methods as $id => $shipping_method ) {
             if ( isset( $shipping_method->enabled ) && 'yes' === $shipping_method->enabled ) {
                 $active_methods[$id] = $shipping_method->plugin_id;
             }
         }
 
         return $active_methods;
+    }
+
+    /**
+     * Get the shipping methods for all shipping zones
+     *
+     * Note: WooCommerce 2.6 intoduces the concept of Shipping Zones
+     *
+     * @return array (Array of) all shipping methods instances
+     */
+    public function get_zones_shipping_methods() {
+
+        $zones = array();
+
+        // Rest of the World zone
+        $zone                                                     = new \WC_Shipping_Zone();
+        $zones[ $zone->get_zone_id() ]                            = $zone->get_data();
+        $zones[ $zone->get_zone_id() ]['formatted_zone_location'] = $zone->get_formatted_location();
+        $zones[ $zone->get_zone_id() ]['shipping_methods']        = $zone->get_shipping_methods();
+
+        // User configured zones
+        $zones = array_merge( $zones, \WC_Shipping_Zones::get_zones() );
+
+        $shipping_methods = array();
+
+        // Format:  $shipping_methods[zone_name_method_id] => shipping_method_object
+        // where zone_name is e.g. domestic, europe, rest_of_the_world, and
+        // methods_id is e.g. flat_rate, free_shiping, local_pickup, etc
+        foreach ( $zones as $zone ) {
+            foreach ( $zone['shipping_methods'] as $instance_id => $shipping_method ) {
+                // Zone names are converted to all lower-case and spaces replaced with
+                $shipping_methods[ $shipping_method->id . '_' . $instance_id ] = $shipping_method;
+            }
+        }
+
+        return $shipping_methods;
     }
 
     /**

@@ -206,7 +206,7 @@ final class Utilities
      *
      * Check if you are running a specified WooCommerce version (or higher)
      *
-     * @param string    $version    version to check agains. (Default: 2.6)
+     * @param string    $version    Version to check agains. (Default: 2.6)
      *
      * @return boolean  true if running version is equal or higher, false otherwise
      */
@@ -219,6 +219,36 @@ final class Utilities
         }
 
         return false;
+    }
+
+    /**
+     * Clean string from special characters, punctuation, international characters,
+     * accented vowels /à, è, ì, .../, cedilla /ç/, dieresis /ë/, tilde /ñ/ and so on.
+     *
+     * @param string    $str        String to clean
+     * @param array     $replace    Special chars to replace with delimiter instead of removed
+     * @param string    $delimiter  String to use to separate words (replaces space char)
+     *
+     * @return string   Returns clean string
+     *
+     */
+    public static function cleanString( $str, $replace = array(), $delimiter = '_' ) {
+
+        // To avoid locale issues accented vowels
+        $search = explode( ',', 'ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,e,i,ø,u' );
+        $safe   = explode( ',', 'c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,e,i,o,u' );
+        $str    = str_replace( $search, $safe, $str );
+
+	if( ! empty( $replace ) ) {
+		$str = str_replace( (array)$replace, ' ', $str );
+	}
+
+	$clean = iconv( 'UTF-8', 'ASCII//TRANSLIT', $str );
+	$clean = preg_replace( "/[^a-zA-Z0-9\/_|+ -]/", '', $clean );
+	$clean = preg_replace( "/[\/_|+ -]+/", $delimiter, $clean );
+        $clean = strtolower( trim( $clean, '-' ) );
+
+	return $clean;
     }
 
 }
