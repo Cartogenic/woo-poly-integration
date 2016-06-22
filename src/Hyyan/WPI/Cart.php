@@ -17,33 +17,20 @@ namespace Hyyan\WPI;
  *
  * @author Hyyan Abo Fakher <tiribthea4hyyan@gmail.com>
  */
-class Cart
-{
+class Cart {
 
     /**
      * Construct object
      */
-    public function __construct()
-    {
+    public function __construct() {
         // handle add to cart
-        add_filter(
-                'woocommerce_add_to_cart_product_id'
-                , array($this, 'addToCart'), 10, 1
-        );
+        add_filter( 'woocommerce_add_to_cart_product_id', array( $this, 'addToCart' ), 10, 1 );
 
         // handle the translation of displayed porducts in cart
-        add_filter(
-                'woocommerce_cart_item_product'
-                , array($this, 'translateCartProducts')
-                , 10
-                , 2
-        );
+        add_filter( 'woocommerce_cart_item_product', array( $this, 'translateCartProducts' ), 10, 2 );
 
         // handle the update of cart widget when language is switched
-        add_action('wp_enqueue_scripts'
-                , array($this, 'replaceCartFragmentsScript')
-                , 100
-        );
+        add_action( 'wp_enqueue_scripts', array( $this, 'replaceCartFragmentsScript' ), 100 );
     }
 
     /**
@@ -56,20 +43,19 @@ class Cart
      *
      * @return integer the final product ID
      */
-    public function addToCart($ID)
-    {
+    public function addToCart( $ID ) {
 
         $result = $ID;
 
         // get the product translations
-        $IDS = Utilities::getProductTranslationsArrayByID($ID);
+        $IDS = Utilities::getProductTranslationsArrayByID( $ID );
 
         // check if any of product's translation is already in cart
-        foreach (WC()->cart->get_cart() as $values) {
+        foreach ( WC()->cart->get_cart() as $values ) {
 
             $product = $values['data'];
 
-            if (in_array($product->id, $IDS)) {
+            if ( in_array( $product->id, $IDS ) ) {
                 $result = $product->id;
                 break;
             }
@@ -86,12 +72,9 @@ class Cart
      *
      * @return \WC_Product
      */
-    public function translateCartProducts($cartItemData, $cartItem)
-    {
+    public function translateCartProducts( $cartItemData, $cartItem ) {
 
-        $translation = Utilities::getProductTranslationByID(
-                        $cartItem['product_id']
-        );
+        $translation = Utilities::getProductTranslationByID( $cartItem['product_id'] );
 
         return $translation ? $translation : $cartItemData;
     }
@@ -101,14 +84,13 @@ class Cart
      *
      * To update cart widget when language is switched
      */
-    public function replaceCartFragmentsScript()
-    {
+    public function replaceCartFragmentsScript() {
+
         /* remove the orginal wc-cart-fragments.js and register ours */
-        wp_deregister_script('wc-cart-fragments');
-        wp_enqueue_script(
-                'wc-cart-fragments'
-                , plugins_url('public/js/Cart.js', Hyyan_WPI_DIR)
-                , array('jquery', 'jquery-cookie')
+        wp_deregister_script( 'wc-cart-fragments' );
+        wp_enqueue_script( 'wc-cart-fragments'
+                , plugins_url( 'public/js/Cart.js', Hyyan_WPI_DIR )
+                , array( 'jquery', 'jquery-cookie' )
                 , Plugin::getVersion()
                 , true
         );

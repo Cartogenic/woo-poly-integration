@@ -86,7 +86,7 @@ class Shipping
         $zones[ $zone->get_zone_id() ]['formatted_zone_location'] = $zone->get_formatted_location();
         $zones[ $zone->get_zone_id() ]['shipping_methods']        = $zone->get_shipping_methods();
 
-        // User configured zones
+        // Add user configured zones
         $zones = array_merge( $zones, \WC_Shipping_Zones::get_zones() );
 
         $shipping_methods = array();
