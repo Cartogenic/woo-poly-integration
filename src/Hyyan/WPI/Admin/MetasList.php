@@ -83,7 +83,7 @@ class MetasList extends AbstractSettings
      */
     public static function normalize($string)
     {
-        return ucwords(str_replace('_', ' ', $string));
+        return ucwords( trim( str_replace( '_', ' ', $string ) ) );
     }
 
 }

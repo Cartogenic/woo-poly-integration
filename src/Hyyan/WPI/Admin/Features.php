@@ -10,8 +10,7 @@
 
 namespace Hyyan\WPI\Admin;
 
-use Hyyan\WPI\Utilities,
-    Hyyan\WPI\Admin\Settings;
+use Hyyan\WPI\Utilities;
 
 /**
  * Features
@@ -139,27 +138,11 @@ class Features extends AbstractSettings
                 'default' => 'off',
                 'label' => __('Translate Shipping Classes', 'woo-poly-integration'),
                 'desc' => __(
-                        'Enable Shipping Classes translations (supported only for WooCommerce versions < 2.6)'
+                        'Enable Shipping Classes translations' . ( Utilities::woocommerce_version_check( '2.6' ) ? ' (not supported for WooCommerce versions >= 2.6)' : '' )
                         , 'woo-poly-integration'
                 )
             )
         );
-
-        // Shipping Class translation is not supported after WooCommerce 2.6
-        // Note: WooCommerce change the Shipping Class interface and is no longer
-        // using the same actions and filters as WordPress. Therefore PolylanTo
-        // can't display the languages columns and metabox for custom post types
-        // and taxonomies.
-        // TODO:
-        // 1. understand how to enable again Shipping Classes translation
-        // 2. Add some java script to disable the option using Utilities::jsScriptWrapper()
-        if ( Utilities::woocommerce_version_check( '2.6' ) ) {
-            if ( 'off' !== Settings::getOption( 'shipping-class', Features::getID() ) ) {
-                $settings = get_option( Features::getID() );
-                $settings['shipping-class'] =  'off';
-                update_option( Features::getID(), $settings );
-            }
-        }
 
         return $fields;
     }

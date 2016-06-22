@@ -10,6 +10,10 @@
 
 namespace Hyyan\WPI;
 
+use Hyyan\WPI\Utilities,
+    Hyyan\WPI\Admin\Settings,
+    Hyyan\WPI\Admin\Features;
+
 /**
  * Shipping
  *
@@ -24,6 +28,26 @@ class Shipping
      * Construct object
      */
     public function __construct() {
+
+        // Shipping Class translation is not supported after WooCommerce 2.6
+        // Note: WooCommerce change the Shipping Class interface and is no longer
+        // using the same actions and filters as WordPress. Therefore PolylanTo
+        // can't display the languages columns and metabox for custom post types
+        // and taxonomies.
+        if ( Utilities::woocommerce_version_check( '2.6' ) ) {
+
+            // Force shipping class translation feature to off
+            if ( 'off' !== Settings::getOption( 'shipping-class', Features::getID() ) ) {
+                $settings = get_option( Features::getID() );
+                $settings['shipping-class'] =  'off';
+                update_option( Features::getID(), $settings );
+            }
+
+            // Disable shipping class translation feature input selector
+            add_action( 'current_screen', array( $this, 'disableSettings' ) );
+
+        }
+
         // Register woocommerce shipping method custom names in polylang strings translations table
         add_action( 'wp_loaded', array( $this, 'register_shipping_strings_for_translation' ) ); // called only after Wordpress is loaded
 
@@ -33,6 +57,38 @@ class Shipping
         // Shipping method in My Account page, Order Emails and Paypal requests
         add_filter( 'woocommerce_order_shipping_method', array( $this, 'translate_order_shipping_method' ), 10, 2 );
 
+    }
+
+    /**
+     * Disable Settings
+     *
+     * @return false if the current post type is not "product"
+     */
+    public function disableSettings() {
+
+        $currentScreen = get_current_screen();
+        if ( $currentScreen->id !== 'settings_page_hyyan-wpi' )
+            return false;
+
+        add_action( 'admin_print_scripts', array( $this, 'disableShippingClassFeature' ), 100 );
+    }
+
+    /**
+     * Add the disable Shipping Class translation feature script
+     *
+     * The script will disable enabling the Shipping Class translation feature
+     */
+    public function disableShippingClassFeature() {
+
+        $jsID = 'shipping-class-translation-disabled';
+        $code = '$( "#wpuf-wpi-features\\\[shipping-class\\\]" ).prop( "disabled", true );';
+
+        // To use any of the meta-characters ( such as !"#$%&'()*+,./:;<=>?@[]^`{|}~ )
+        // as a literal part of a name, it must be escaped with with two backslashes: \\.
+        // Because jsScriptWrapper() uses sprintf() it will treat one backslash as escape
+        // character, so we need to add a 3rd (crazy!) backslashes.
+
+        Utilities::jsScriptWrapper( $jsID, $code );
     }
 
     /**

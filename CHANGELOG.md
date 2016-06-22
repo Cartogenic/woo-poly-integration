@@ -1,3 +1,7 @@
+###1.0.0
+
+* Added support for WooCommerce 2.6
+
 ###0.27
 
 * Fixed order emails translations
