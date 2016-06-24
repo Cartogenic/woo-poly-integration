@@ -31,10 +31,7 @@ class Meta
     public function __construct()
     {
         // sync product meta
-        add_action(
-                'current_screen'
-                , array($this, 'syncProductsMeta')
-        );
+        add_action( 'current_screen', array( $this, 'syncProductsMeta' ) );
     }
 
     /**
@@ -49,43 +46,63 @@ class Meta
         add_filter('pll_copy_post_metas', array(__CLASS__, 'getProductMetaToCopy'));
 
         $currentScreen = get_current_screen();
-
-        if ($currentScreen->post_type !== 'product')
+        if ( $currentScreen->post_type !== 'product' ) {
             return false;
+        }
 
         $ID = false;
         $disable = false;
 
         /*
-         * Disable editing product meta for translation
+         * Disable editing product meta for product translations
          *
-         * if the "post" is defined in $_GET then we should check if the current
-         * product has a translation and it is the same as the default translation
-         * lang defined in polylang then product meta editing must by enabled
+         * In case of a "Add or update product" ($GET['post'] is set), and the
+         * product language is different from the default, it is a product translation
+         * and editing the product meatdata should be disabled.
          *
-         * if the "new_lang" is defined or if the current page is the "edit"
-         * page then product meta editing must by disabled
+         * In case of a "Add product translation" ($GET['new_lang'] is set), or the
+         * 'edit' page, editing product metadata should be disabled.
          */
-        if (isset($_GET['post'])) {
+        error_log( 'GET[post]: ' . print_r( $_GET['post'], true ) );
+        error_log( 'GET[new_lang]: ' . print_r( $_GET['new_lang'], true ) );
+        error_log( 'current_screen base: ' . print_r( $currentScreen->base, true ) );
+        error_log( 'GET[from_post]: ' . print_r( $_GET['from_post'], true ) );
+
+        if ( isset( $_GET['post'] ) ) { // Add or update product
+
             $ID = absint($_GET['post']);
-            $disable = $ID && (pll_get_post_language($ID) != pll_default_language());
-        } elseif (isset($_GET['new_lang']) || $currentScreen->base == 'edit') {
-            $disable = isset($_GET['new_lang']) && (esc_attr($_GET['new_lang']) != pll_default_language()) ?
-                    true : false;
-            $ID = isset($_GET['from_post']) ? absint($_GET['from_post']) : false;
+            $disable = $ID && ( pll_get_post_language( $ID ) != pll_default_language() );
+
+        } elseif ( isset( $_GET['new_lang'] ) || $currentScreen->base == 'edit' ) { // Add product translation
+
+            $ID = isset( $_GET['from_post'] ) ? absint( $_GET['from_post'] ) : false;
+            $disable = isset( $_GET['new_lang'] ) && ( esc_attr( $_GET['new_lang'] ) != pll_default_language() ) ? true : false;
+
+            // Teste if the default product (id = from _post) has the '_translation_porduct_type'
+            // meta. If not, product was created before plugin acivation and needs to be added.
+            if ( $ID ) {
+
+                $meta = get_post_meta( $ID, '_translation_porduct_type' );
+                if ( empty( $meta ) ) {
+
+                    $product = get_product( $ID );
+                    if ( $product ) {
+                        update_post_meta( $ID, '_translation_porduct_type', $product->product_type );
+                    }
+
+                }
+
+            }
+
         }
 
-        // disable fields edit for translation
-        if ($disable) {
-            add_action(
-                    'admin_print_scripts'
-                    , array($this, 'addFieldsLocker')
-                    , 100
-            );
+        // disable fields edit for product translations
+        if ( $disable ) {
+            add_action( 'admin_print_scripts', array( $this, 'addFieldsLocker' ), 100 );
         }
 
-        /* sync selected product type */
-        $this->syncSelectedproductType($ID);
+        // sync the product type selection in the product data settings box
+        $this->sync_product_type_selection( $ID );
     }
 
     /**
@@ -236,11 +253,12 @@ class Meta
     }
 
     /**
-     * Sync the product select list
+     * Sync the product type selection (e.g. Simple product, Grouped product, Variable
+     * product, ) in the dropdown list in the Product Data settings box
      *
-     * @param integer $ID product type
+     * @param integer $ID Product Id
      */
-    protected function syncSelectedproductType($ID = null)
+    protected function sync_product_type_selection( $ID = null )
     {
         /*
          * First we add save_post action to save the product type
@@ -248,22 +266,22 @@ class Meta
          *
          * This is step is important so we can get the right product type
          */
-        add_action('save_post', function ($_ID) {
-            $product = get_product($_ID);
-            if ($product && !isset($_GET['from_post'])) {
-                $type = $product->product_type;
-                update_post_meta($_ID, '_translation_porduct_type', $type);
+        add_action('save_post', function ( $_ID ) {
+
+            $product = get_product( $_ID );
+            if ( $product && ! isset( $_GET['from_post'] ) ) {
+                update_post_meta( $_ID, '_translation_porduct_type', $product->product_type );
             }
+
         });
 
         /*
-         * If the _translation_porduct_type meta is
-         * found then we add the js script to sync the product type select
-         * list
+         * If the _translation_porduct_type meta is found then we add the
+         * js script to sync the product type selection
          */
-        if ($ID && ($type = get_post_meta($ID, '_translation_porduct_type'))) {
+        if ( $ID && ( $type = get_post_meta( $ID, '_translation_porduct_type' ) ) ) {
 
-            add_action('admin_print_scripts', function () use ($type) {
+            add_action( 'admin_print_scripts', function () use ( $type ) {
 
                 $jsID = 'product-type-sync';
                 $code = sprintf(
@@ -279,8 +297,8 @@ class Meta
                         , $type[0]
                 );
 
-                Utilities::jsScriptWrapper($jsID, $code, false);
-            }, 11);
+                Utilities::jsScriptWrapper( $jsID, $code, false );
+            }, 11 );
         }
     }
 
