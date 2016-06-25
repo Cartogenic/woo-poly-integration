@@ -47,7 +47,7 @@ class Variation
     /**
      * Handle variation duplicate
      *
-     * @return boolean false if the from product conatins no variatoins
+     * @return boolean false if the from product contains no variatoins
      */
     public function duplicate()
     {
@@ -61,22 +61,12 @@ class Variation
         if ($this->to->id === $this->from->id) {
 
             /*
-             * In such a case just add the duplicate meta
+             * In such a case just add the duplicate meta key
              */
 
             foreach ($fromVariation as $variation) {
-                if (
-                        !metadata_exists(
-                                'post'
-                                , $variation['variation_id']
-                                , self::DUPLICATE_KEY
-                        )
-                ) {
-                    update_post_meta(
-                            $variation['variation_id']
-                            , self::DUPLICATE_KEY
-                            , $variation['variation_id']
-                    );
+                if ( !metadata_exists( 'post', $variation['variation_id'], self::DUPLICATE_KEY ) ) {
+                    update_post_meta( $variation['variation_id'], self::DUPLICATE_KEY, $variation['variation_id'] );
                 }
             }
         } else {
@@ -85,20 +75,18 @@ class Variation
             set_time_limit(0);
 
             foreach ($fromVariation as $variation) {
-
                 /*
                  * First we check if the "to" product contains the duplicate meta
                  * key to find out if we have to update or insert
                  */
+                $posts = get_posts( array(
+                    'meta_key'      => self::DUPLICATE_KEY,
+                    'meta_value'    => $variation['variation_id'],
+                    'post_type'     => 'product_variation',
+                    'post_parent'   => $this->to->id
+                ) );
 
-                $posts = get_posts(array(
-                    'meta_key' => self::DUPLICATE_KEY,
-                    'meta_value' => $variation['variation_id'],
-                    'post_type' => 'product_variation',
-                    'post_parent' => $this->to->id
-                ));
-
-                switch (count($posts)) {
+               switch (count($posts)) {
                     case 1:
                         // update
                         $this->update(
@@ -117,7 +105,7 @@ class Variation
                 }
             }
 
-            /* Restor original timeout */
+            /* Restore original timeout */
             set_time_limit(ini_get('max_execution_time'));
         }
     }
@@ -179,6 +167,9 @@ class Variation
      */
     protected function insert(\WC_Product_Variation $variation, array $metas)
     {
+        // Add the duplicate meta to the default language product variation,
+        // just in case the product was created before plugin acivation.
+        $this->add_duplicate_meta( $variation->variation_id );
 
         $data = (array) get_post($variation->variation_id);
         unset($data['ID']);
@@ -206,6 +197,22 @@ class Variation
     protected function update(\WC_Product_Variation $variation, \WP_Post $post, array $metas)
     {
         $this->copyVariationMetas($variation->variation_id, $post->ID);
+    }
+
+    /**
+     * Add duplicate meta key to products created before plugin activation
+     *
+     * @param int $ID   Id of the product in the default language
+     */
+    public function add_duplicate_meta( $ID) {
+        if ( $ID ) {
+            $meta = get_post_meta( $ID, self::DUPLICATE_KEY );
+
+            if ( empty( $meta ) ) {
+                update_post_meta( $ID, self::DUPLICATE_KEY, $ID );
+            }
+
+        }
     }
 
     /**

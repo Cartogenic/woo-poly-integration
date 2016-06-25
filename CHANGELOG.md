@@ -2,6 +2,7 @@
 
 * Dev: Added support for WooCommerce 2.6
 * Fix: Fixed product type sync for products created before plugin activation (issue #8)
+* Dev: Code and code documentation clean up
 
 ###0.27
 

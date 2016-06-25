@@ -63,11 +63,6 @@ class Meta
          * In case of a "Add product translation" ($GET['new_lang'] is set), or the
          * 'edit' page, editing product metadata should be disabled.
          */
-        error_log( 'GET[post]: ' . print_r( $_GET['post'], true ) );
-        error_log( 'GET[new_lang]: ' . print_r( $_GET['new_lang'], true ) );
-        error_log( 'current_screen base: ' . print_r( $currentScreen->base, true ) );
-        error_log( 'GET[from_post]: ' . print_r( $_GET['from_post'], true ) );
-
         if ( isset( $_GET['post'] ) ) { // Add or update product
 
             $ID = absint($_GET['post']);
@@ -78,21 +73,9 @@ class Meta
             $ID = isset( $_GET['from_post'] ) ? absint( $_GET['from_post'] ) : false;
             $disable = isset( $_GET['new_lang'] ) && ( esc_attr( $_GET['new_lang'] ) != pll_default_language() ) ? true : false;
 
-            // Teste if the default product (id = from _post) has the '_translation_porduct_type'
-            // meta. If not, product was created before plugin acivation and needs to be added.
-            if ( $ID ) {
-
-                $meta = get_post_meta( $ID, '_translation_porduct_type' );
-                if ( empty( $meta ) ) {
-
-                    $product = get_product( $ID );
-                    if ( $product ) {
-                        update_post_meta( $ID, '_translation_porduct_type', $product->product_type );
-                    }
-
-                }
-
-            }
+            // Add the '_translation_porduct_type' meta to the default language product
+            // (id = from _post),just in case the product was created before plugin acivation.
+            $this->add_product_type_meta( $ID );
 
         }
 
@@ -103,6 +86,25 @@ class Meta
 
         // sync the product type selection in the product data settings box
         $this->sync_product_type_selection( $ID );
+    }
+
+    /**
+     * Add product type meta to products created before plugin activation
+     *
+     * @param int $ID   Id of the product in the default language
+     */
+    public function add_product_type_meta( $ID) {
+        if ( $ID ) {
+            $meta = get_post_meta( $ID, '_translation_porduct_type' );
+
+            if ( empty( $meta ) ) {
+                $product = wc_get_product( $ID );
+                if ( $product ) {
+                    update_post_meta( $ID, '_translation_porduct_type', $product->product_type );
+                }
+            }
+
+        }
     }
 
     /**
@@ -266,9 +268,9 @@ class Meta
          *
          * This is step is important so we can get the right product type
          */
-        add_action('save_post', function ( $_ID ) {
+        add_action( 'save_post', function ( $_ID ) {
 
-            $product = get_product( $_ID );
+            $product = wc_get_product( $_ID );
             if ( $product && ! isset( $_GET['from_post'] ) ) {
                 update_post_meta( $_ID, '_translation_porduct_type', $product->product_type );
             }

@@ -48,7 +48,7 @@ final class Utilities
      * @see \Hyyan\WPI\getProductTranslationsByID()
      *
      * @param \WC_Product $product        the product object
-     * @param boolean     $excludeDefault ture to exclude defualt language
+     * @param boolean     $excludeDefault true to exclude default language
      *
      * @return array associative array with language code as key and ID of translations
      *               as value.
@@ -59,9 +59,9 @@ final class Utilities
     }
 
     /**
-     * Get porduct translation by ID
+     * Get product translation by ID
      *
-     * @param integer $ID   the porduct ID
+     * @param integer $ID   the product ID
      * @param string  $slug the language slug
      *
      * @return \WC_Product|false product translation if found , false if the
@@ -80,10 +80,10 @@ final class Utilities
     /**
      * Get product translation by object
      *
-     * @param \WC_Product $product the product to use to retirve translation
+     * @param \WC_Product $product the product to use to retrive translation
      * @param string      $slug    the language slug
      *
-     * @return \WC_Product product translation or same prodcut if translaion not found
+     * @return \WC_Product product translation or same product if translaion not found
      */
     public static function getProductTranslationByObject(\WC_Product $product, $slug = '')
     {

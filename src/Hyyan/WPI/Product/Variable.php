@@ -124,7 +124,7 @@ class Variable
     }
 
     /**
-     * Remove variatoins related to current removed variation
+     * Remove variations related to current removed variation
      */
     public function removeVariations()
     {
