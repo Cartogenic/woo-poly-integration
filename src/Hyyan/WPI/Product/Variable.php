@@ -56,21 +56,22 @@ class Variable
 
     public function sync_default_attributes( $post_id, $post, $update ) {
 
-        // Don't sync on autosave
-        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        // Don't sync if not in the admin backend nor on autosave
+        if ( ! is_admin() &&  defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
             return;
         }
 
-        // Check whether Default Attribute syncronization is enabled
+        // Don't sync if Default Attribute syncronization is disabled
         $metas = Meta::getProductMetaToCopy();
+
         if ( ! in_array( '_default_attributes', $metas ) ) {
             return;
         }
 
-        $currentScreen = get_current_screen();
+        // Don't sync if not a Variable Product
         $product = wc_get_product( $post_id );
 
-        if ( 'product' === $currentScreen->post_type && 'variable' === $product->product_type ) {
+        if ( $product && 'variable' === $product->product_type ) {
 
             $default_attributes = $product->get_variation_default_attributes();
 

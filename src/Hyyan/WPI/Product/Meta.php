@@ -256,7 +256,7 @@ class Meta
 
     /**
      * Sync the product type selection (e.g. Simple product, Grouped product, Variable
-     * product, ) in the dropdown list in the Product Data settings box
+     * product, etc ) in the dropdown list in the Product Data settings box
      *
      * @param integer $ID Product Id
      */
