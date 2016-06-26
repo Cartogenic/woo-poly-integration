@@ -100,7 +100,7 @@ class Variation
                         $this->insert(wc_get_product($variation['variation_id']), $variation);
                         break;
                     default:
-                        // we can not handle , something wrong here
+                        // we can not handle, something wrong here
                         break;
                 }
             }
@@ -224,43 +224,49 @@ class Variation
      * @param integer $from product variation ID
      * @param integer $to   product variation ID
      */
-    protected function copyVariationMetas($from, $to)
+    protected function copyVariationMetas( $from, $to )
     {
 
         /* copy or synchronize post metas and allow plugins to do the same */
-        $metas = get_post_custom($from);
+        $metas = get_post_custom( $from );
 
         /* get public and protected meta keys */
-        $keys = array_unique(array_merge(array_keys($metas), array_keys(get_post_custom($to))));
+        $keys = array_unique( array_merge( array_keys( $metas ), array_keys( get_post_custom( $to ) ) ) );
 
         /* synchronize */
-        foreach ($keys as $key) {
+        foreach ( $keys as $key ) {
             /*
              * the synchronization process of multiple values custom fields is
              * easier if we delete all metas first
              */
-            delete_post_meta($to, $key);
-            if (isset($metas[$key])) {
-                if (substr($key, 0, 10) == 'attribute_') {
-                    $translated = array();
-                    $tax = str_replace('attribute_', '', $key);
+            delete_post_meta( $to, $key );
+            if ( isset( $metas[$key] ) ) {
 
-                    foreach ($metas[$key] as $termSlug) {
-                        $term = get_term_by('slug', $termSlug, $tax);
-                        if ($term) {
-                            $lang = isset($_GET['new_lang']) ? esc_attr($_GET['new_lang']) : pll_get_post_language($this->to->id);
-                            $translated[] = get_term_by('id', pll_get_term($term->term_id, $lang), $tax)->slug;
+                // Some attributes are taxonomies managed by Polylang.
+                // For taxonomies we need to ask Polylang for the term translation
+                if ( substr( $key, 0, 10 ) == 'attribute_' ) {
+                    $translated = array();
+                    $tax = str_replace( 'attribute_', '', $key );
+
+                    foreach ( $metas[$key] as $termSlug ) {
+                        $term = get_term_by( 'slug', $termSlug, $tax );
+                        if ( $term ) {
+                            $lang = isset( $_GET['new_lang'] ) ? esc_attr( $_GET['new_lang'] ) : pll_get_post_language( $this->to->id );
+                            $translated[] = get_term_by( 'id', pll_get_term( $term->term_id, $lang), $tax )->slug;
+                        } else {
+                            $translated[] = $termSlug;
                         }
                     }
                     $metas[$key] = $translated;
                 }
-                foreach ($metas[$key] as $value) {
+
+                foreach ( $metas[$key] as $value ) {
                     /*
                      * Important: always maybe_unserialize value coming from
-                     *            get_post_custom. See codex.
+                     * get_post_custom. See codex: https://codex.wordpress.org/Function_Reference/get_post_custom
                      */
-                    $value = maybe_unserialize($value);
-                    add_post_meta($to, $key, $value);
+                    $value = maybe_unserialize( $value );
+                    add_post_meta( $to, $key, $value );
                 }
             }
         }
