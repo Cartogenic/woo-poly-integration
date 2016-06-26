@@ -13,7 +13,7 @@ namespace Hyyan\WPI\Product;
 /**
  * Variation
  *
- * Handle Variation Duplicate
+ * Handle Variation Duplication
  *
  * @author Hyyan Abo Fakher <tiribthea4hyyan@gmail.com>
  */

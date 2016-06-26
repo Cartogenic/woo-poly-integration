@@ -30,6 +30,7 @@ class Variable
     {
 
         add_action('save_post', array($this, 'duplicateVariations'), 10, 3);
+        add_action( 'save_post', array( $this, 'sync_default_attributes' ), 100, 3 );
         add_action(
                 'wp_ajax_woocommerce_remove_variations'
                 , array($this, 'removeVariations')
@@ -50,6 +51,80 @@ class Variable
         if (is_admin()) {
             $this->handleVariableLimitation();
             $this->shouldDisableLangSwitcher();
+        }
+    }
+
+    public function sync_default_attributes( $post_id, $post, $update ) {
+
+        // Don't sync on autosave
+        if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+            return;
+        }
+
+        // Check whether Default Attribute syncronization is enabled
+        $metas = Meta::getProductMetaToCopy();
+        if ( ! in_array( '_default_attributes', $metas ) ) {
+            return;
+        }
+
+        $currentScreen = get_current_screen();
+        $product = wc_get_product( $post_id );
+
+        if ( 'product' === $currentScreen->post_type && 'variable' === $product->product_type ) {
+
+            $default_attributes = $product->get_variation_default_attributes();
+
+            $terms = array(); // Array of terms:
+                              //    - if the term is taxonomy: term object
+                              //    - otherwise: array (term slug => term value)
+
+            foreach ( $default_attributes as $default_attr_key => $default_attr_value ) {
+                $term = get_term_by( 'name', $default_attr_value, $default_attr_key );
+
+                if ( $term && pll_is_translated_taxonomy( $term->taxonomy ) )
+                    $terms[] = $term;
+                else
+                    $terms[] = array( $default_attr_key => $default_attr_value );
+            }
+
+            // For each product translation, get the translated (default) terms/attributes
+            $langs = pll_languages_list();
+            foreach ( $langs as $lang ) {
+
+                $translation_id = pll_get_post( $product->id, $lang );
+
+                if ( $translation_id != $product->id ) {
+
+                    // Translate managed taxonomy terms
+                    $translated_terms = array();
+
+                    foreach ( $terms as $term ) {
+                        if ( is_object( $term ) ) {
+                            $translated_term_id = pll_get_term( $term->term_id, $lang );
+                            $translated_term    = get_term_by( 'id', $translated_term_id, $term->taxonomy );
+
+                            $translated_terms[] = array( $translated_term->taxonomy => $translated_term->slug );
+                        } else {
+                            $translated_terms[] = $term;
+                        }
+                    }
+
+                    // Create post meta array
+                    $translated_meta = array();
+
+                    foreach ( $translated_terms as $term ) {
+                        foreach ( $term as $key => $value ) {
+                            $translated_meta[$key] = $value;
+                        }
+                    }
+
+                    // Update post meta
+                    update_post_meta( $translation_id, '_default_attributes', $translated_meta );
+
+                }
+
+            }
+
         }
     }
 

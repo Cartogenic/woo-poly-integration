@@ -36,12 +36,11 @@ class MetasList extends AbstractSettings
         return array(
             array(
                 'title' => __('Metas List', 'woo-poly-integration'),
-                'desc' => __(
-                        'The section will allow you to controll which metas should be
-                         synced between product and its translation , please ignore
-                         this section if you do not understand the meaning of this.
-                        '
-                        , 'woo-poly-integration'
+                'desc'  => __(
+                              'The section will allow you to controll which metas should be
+                              synced between product and its translation, please ignore
+                              this section if you do not understand the meaning of this.',
+                              'woo-poly-integration'
                 )
             )
         );
