@@ -98,7 +98,7 @@ final class Utilities
     }
 
     /**
-     * Get polylang langauge entity
+     * Get polylang language entity
      *
      * @global \Polylang $polylang
      *
@@ -232,7 +232,7 @@ final class Utilities
      * @return string   Returns clean string
      *
      */
-    public static function cleanString( $str, $replace = array(), $delimiter = '_' ) {
+    public static function clean_string( $str, $replace = array(), $delimiter = '_' ) {
 
         // To avoid locale issues accented vowels
         $search = explode( ',', 'ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,e,i,ø,u' );

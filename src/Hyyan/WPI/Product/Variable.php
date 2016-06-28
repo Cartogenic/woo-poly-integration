@@ -28,32 +28,29 @@ class Variable
      */
     public function __construct()
     {
+        // Handle variations dupplication
+        add_action( 'save_post', array( $this, 'duplicateVariations' ), 10, 3 );
+        add_action( 'save_post', array( $this, 'sync_default_attributes' ), 100, 3 ); // Needs to run after duplicateVariations
 
-        add_action('save_post', array($this, 'duplicateVariations'), 10, 3);
-        add_action( 'save_post', array( $this, 'sync_default_attributes' ), 100, 3 );
-        add_action(
-                'wp_ajax_woocommerce_remove_variations'
-                , array($this, 'removeVariations')
-                , 9
-        );
+        add_action( 'wp_ajax_woocommerce_remove_variations', array( $this, 'removeVariations' ), 9 );
 
-        // extend meta list to include variation meta
-        add_filter(
-                HooksInterface::PRODUCT_META_SYNC_FILTER
-                , array($this, 'extendProductMetaList')
-        );
-        /* Extend selectors list to include variation meta */
-        add_filter(
-                HooksInterface::FIELDS_LOCKER_SELECTORS_FILTER
-                , array($this, 'extendFieldsLockerSelectors')
-        );
+        // Extend meta list to include variation meta and fields to lock
+        add_filter( HooksInterface::PRODUCT_META_SYNC_FILTER, array( $this, 'extendProductMetaList' ) );
+        add_filter( HooksInterface::FIELDS_LOCKER_SELECTORS_FILTER, array( $this, 'extendFieldsLockerSelectors' ) );
 
-        if (is_admin()) {
+        if ( is_admin() ) {
             $this->handleVariableLimitation();
             $this->shouldDisableLangSwitcher();
         }
     }
 
+    /**
+     * Sync default attributes between product translations
+     *
+     * @param int       $post_id    Post ID
+     * @param \WP_Post  $post       Post Object
+     * @param boolean   $update     true if updating the post, false otherwise
+     */
     public function sync_default_attributes( $post_id, $post, $update ) {
 
         // Don't sync if not in the admin backend nor on autosave
@@ -90,6 +87,7 @@ class Variable
 
             // For each product translation, get the translated (default) terms/attributes
             $langs = pll_languages_list();
+
             foreach ( $langs as $lang ) {
 
                 $translation_id = pll_get_post( $product->id, $lang );

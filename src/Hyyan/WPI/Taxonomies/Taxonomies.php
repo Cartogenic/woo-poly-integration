@@ -128,7 +128,7 @@ class Taxonomies
             'categories' => 'Hyyan\WPI\Taxonomies\Categories',
             'tags' => 'Hyyan\WPI\Taxonomies\Tags',
             'shipping-class' => 'Hyyan\WPI\Taxonomies\ShippingClass'    // For WC >= 2.6, Shipping Classes translation is set forced to 'off' in /Hyyyan/WPI/Admin/Features.php
-        );                                                              // and will be removed from the taxomonies tobe filteres by language, because Shipping Classes can no longer
+        );                                                              // and will be removed from the taxomonies to be filteres by language, because Shipping Classes can no longer
                                                                         // be translated in Polylang
 
         foreach ($supported as $option => $class) {

@@ -1,9 +1,11 @@
 ###1.0.0
 
 * Dev: Added support for WooCommerce 2.6
-* Fix: Fixed product type sync for products created before plugin activation (issue #8)
 * Dev: Code and code documentation clean up
+* Fix: Fixed product type sync for products created before plugin activation (issue #8)
 * Fix: Fixed default form values sync for variable products (issue #11)
+* Fix: Fixed non-taxonomy attributes were not synced (issue #12)
+* Fix: Fixed taxonomy attributes are not translated in cart and checkout pages
 
 ###0.27
 
@@ -17,7 +19,7 @@
 ###0.26
 
 * Fixed product duplication in shop page when default language is changed
-* Fixed total sales is syned even if product is not managing stock
+* Fixed total sales is synced even if product is not managing stock
 * Fixed duplicator class PHP notice when product is being edited in quick mode
 * Fixed random behaviour for product type sync
 * Fixed tax class are not synced
