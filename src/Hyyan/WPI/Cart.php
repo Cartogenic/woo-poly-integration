@@ -57,33 +57,14 @@ class Cart {
 
         $result = $ID;
 
-        error_log( print_r( '', true ) );
-        error_log( print_r( '', true ) );
-        error_log( print_r( '', true ) );
-        error_log( 'prod_id to add to cart: ' . print_r( $ID, true ) );
-
         // get the product translations
         $IDS = Utilities::getProductTranslationsArrayByID( $ID );
 
-        error_log( 'translation ids of prod_id: ' . print_r( $IDS, true ) );
-        error_log( print_r( '', true ) );
-        error_log( print_r( '', true ) );
-        error_log( print_r( '', true ) );
-
         // check if any of product's translation is already in cart
         foreach ( WC()->cart->get_cart() as $values ) {
-
-            error_log( 'prod id in the cart: ' . print_r( $values['product_id'], true ) );
-            error_log( '          w/ var id: ' . print_r( $values['variation_id'], true ) );
-
             $product = $values['data'];
 
             if ( in_array( $product->id, $IDS ) ) {
-
-                error_log( 'translation found in the cart: ' . print_r( $values['product_id'], true ) . ' is translation of ' .  print_r( $ID, true ) );
-                error_log( 'return the translation instead: ' . print_r( $values['product_id'], true ) );
-                error_log( print_r( '', true ) );
-
                 $result = $product->id;
                 break;
             }
@@ -93,10 +74,11 @@ class Cart {
     }
 
     /**
-     * Translate displayed products in cart
+     * Replace products in cart with translation of the product in the current
+     * language
      *
-     * @param \WC_Product|\WC_Product_Variation $cartItemData
-     * @param array       $cartItem
+     * @param \WC_Product|\WC_Product_Variation $cart_item_data     Product data
+     * @param array                             $cart_item          Cart item
      *
      * @return \WC_Product|\WC_Product_Variation
      */
@@ -133,7 +115,7 @@ class Cart {
 
                     // 3. Get variation translation
                     if ( isset( $variation_post ) && $variation_post && count( $variation_post ) == 1 ) {
-                        $cart_item_data_translation = wc_get_product( $variation_post[0]->ID );
+                        $cart_item_data_translation =  wc_get_product( $variation_post[0]->ID );
                     }
 
                 }
@@ -150,24 +132,30 @@ class Cart {
 
     public function translate_cart_item_data( $item_data, $cart_item ) {
 
-        error_log( print_r( '', true ) );
-        error_log( print_r( '', true ) );
-        error_log( print_r( '', true ) );
-        error_log( 'item data: ' . print_r( $item_data, true ) );
-
         $item_data_translation = array();
 
         foreach ( $item_data as $data ) {
 
-            $term_id = term_exists( $data['value'] );
+            $term_id = null;
+
+            foreach ( $cart_item['variation'] as $tax => $term_slug ) {
+
+                $tax  = str_replace( 'attribute_', '', $tax );
+                $term = get_term_by( 'slug', $term_slug, $tax );
+
+                if ( $term && $term->name === $data['value'] ) {
+                    $term_id = $term->term_id;
+                    break;
+                }
+            }
 
             if ( $term_id !== 0 && $term_id !== null ) {
 
                 // Product attribute is a taxonomy term - check if Polylang has a translation
-                $term_lang = pll_get_term_language( $term_id );
                 $term_id_translation = pll_get_term( $term_id );
 
                 if ( $term_id_translation == $term_id ) {
+
                     // Already showing the attribute (term) in the correct language
                     $item_data_translation[] = $data;
 
@@ -179,13 +167,6 @@ class Cart {
 
                     $item_data_translation[] = array( 'key' => $data['key'], 'value' => ! $error ? $term_translation->name : $data['value'] ); // On error return same
                 }
-
-                error_log( 'term exists: yes' );
-                error_log( 'term id found: ' . print_r( $term_id, true ) );
-                error_log( 'term found: ' . print_r( get_term( $term_id ), true ) );
-                error_log( 'term lang: ' . print_r( $term_lang, true ) );
-                error_log( 'term id translation: ' . print_r( $term_id_translation, true ) );
-                error_log( print_r( '', true ) );
 
             } else {
 
@@ -250,8 +231,9 @@ class Cart {
         $adding_to_cart      = wc_get_product( $product_id );
 
         if ( ! $adding_to_cart ) {
-                return;
+            return;
         }
+        // End: From add_to_cart_action( $url )
 
         // From add_to_cart_handler_variable( $product_id )
         $variation_id       = empty( $_REQUEST['variation_id'] ) ? '' : absint( $_REQUEST['variation_id'] );
@@ -260,22 +242,37 @@ class Cart {
         $variations         = array();
         $attributes         = $adding_to_cart->get_attributes();
 
-
-        error_log( print_r( '', true ) );
-        error_log( print_r( '', true ) );
-        error_log( print_r( '', true ) );
-        error_log( 'real product adding to cart: ' . print_r( absint( $_REQUEST['add-to-cart'] ), true ) );
-        error_log( 'product adding to cart: ' . print_r( $product_id, true ) );
-        error_log( 'variation adding to cart: ' . print_r( $variation_id, true ) );
-        error_log( 'variation attributes: ' . print_r( $attributes, true ) );
-
-
         // If no variation ID is set, attempt to get a variation ID from posted attributes.
         if ( empty( $variation_id ) ) {
             $variation_id = $adding_to_cart->get_matching_variation( wp_unslash( $_POST ) );
         }
 
-        $variation = wc_get_product( $variation_id );
+        /**
+         * Custom code to check if a translation of the product is already in the
+         * cart,* and in that case, replace the variation being added to the cart
+         * by the respective translation in the language of the product already
+         * in the cart.
+         * NOTE: The product_id is filtered by $this->add_to_cart() and holds the
+         * id of the product translation, if one exists in the cart.
+         */
+        if ( $product_id != absint( $_REQUEST['add-to-cart'] ) ) {
+
+            // There is a translation of the product already in the cart:
+            // Get the language of the product in the cart
+            $lang = pll_get_post_language( $product_id );
+
+            // Get the respective variation in the language of the product in the cart
+            $variation    = $this->get_variation_translation( $variation_id, $lang );
+            $variation_id = $variation->variation_id;
+
+        } else {
+            $variation = wc_get_product( $variation_id );
+        }
+        /**
+         * End of custom code.
+         */
+
+        //$variation = wc_get_product( $variation_id );
 
         // Verify all attributes
         foreach ( $attributes as $attribute ) {
@@ -291,6 +288,29 @@ class Cart {
                 if ( $attribute['is_taxonomy'] ) {
                     // Don't use wc_clean as it destroys sanitized characters
                     $value = sanitize_title( stripslashes( $_REQUEST[ $taxonomy ] ) );
+
+                    /**
+                    * Custom code to check if a translation of the product is already in the cart,
+                    * and in that case, replace the variation attribute being added to the cart by
+                    * the respective translation in the language of the product already in the cart
+                    * NOTE: The product_id is filtered by $this->add_to_cart() and holds the id of
+                    * the product translation, if one exists in the cart.
+                    */
+                    if ( $product_id != absint( $_REQUEST['add-to-cart'] ) ) {
+
+                        // Get the translation of the term
+                        $term  = get_term_by( 'slug', $value, $attribute['name'] );
+                        $_term = get_term_by( 'id', pll_get_term( absint( $term->term_id ), $lang ), $attribute['name'] );
+
+                        if ( $_term ) {
+                            $value = $_term->slug;
+                        }
+
+                    }
+                    /**
+                    * End of custom code.
+                    */
+
                 } else {
                     $value = wc_clean( stripslashes( $_REQUEST[ $taxonomy ] ) );
                 }
@@ -319,10 +339,79 @@ class Cart {
 
             if ( $passed_validation && WC()->cart->add_to_cart( $product_id, $quantity, $variation_id, $variations ) !== false ) {
                 wc_add_to_cart_message( array( $product_id => $quantity ), true );
-                return true;
+
+                //return true; Doing an action, no return needed but we need to set $was_added_to_cart to trigger the redirect
+                $was_added_to_cart = true;
+            } else {
+                $was_added_to_cart = false;
             }
         }
-        return false;
+        //return false; Doing an action, no return needed but we need to set $was_added_to_cart to trigger the redirect
+        // End: From add_to_cart_handler_variable( $product_id )
+
+        /**
+         * Because this is a custom handler we need to take care of the rediret
+         * to the cart. Again we use the code from add_to_cart_action( $url )
+         */
+        // From add_to_cart_action( $url )
+        // If we added the product to the cart we can now optionally do a redirect.
+        if ( $was_added_to_cart && wc_notice_count( 'error' ) === 0 ) {
+                // If has custom URL redirect there
+                if ( $url = apply_filters( 'woocommerce_add_to_cart_redirect', $url ) ) {
+                        wp_safe_redirect( $url );
+                        exit;
+                } elseif ( get_option( 'woocommerce_cart_redirect_after_add' ) === 'yes' ) {
+                        wp_safe_redirect( wc_get_cart_url() );
+                        exit;
+                }
+        }
+        // End: From add_to_cart_action( $url )
+    }
+
+    /**
+     * Get product variation translation
+     *
+     * Returns the product variation object for a given language.
+     *
+     * @param int       $variation_id   (required) Id of the variation to translate
+     * @param string    $lang           (optional) 2-letters code of the language
+     *                                  like Polylang
+     *                                  language slugs, defaults to current language
+     *
+     * @return \WP_Product_Variation    Product variation object for the given
+     *                                  language, false on error or if doesn't exists.
+     */
+    public function get_variation_translation( $variation_id, $lang = '' ) {
+
+        $_variation = false;
+
+        // Get parent product translation for the given language
+        $variation = wc_get_product( $variation_id );
+        $parent = $variation->parent;
+        $_product_id = pll_get_post( $parent->id, $lang );
+
+        // Get variation translation using the duplication metadata value
+        $meta = get_post_meta( $variation_id, Variation::DUPLICATE_KEY, true );
+
+        if ( $_product_id && $meta ) {
+
+            // Get posts (variations) with duplication metadata value
+            $variation_post = get_posts( array(
+                'meta_key'    => Variation::DUPLICATE_KEY,
+                'meta_value'  => $meta,
+                'post_type'   => 'product_variation',
+                'post_parent' => $_product_id
+            ) );
+
+            // Get variation translation
+            if ( $variation_post && count( $variation_post ) == 1 ) {
+                $_variation = wc_get_product( $variation_post[0]->ID );
+            }
+
+        }
+
+        return $_variation;
+
     }
 
 }

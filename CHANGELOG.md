@@ -3,7 +3,7 @@
 * Dev: Added support for WooCommerce 2.6
 * Dev: Code and code documentation clean up
 * Fix: Fixed product type sync for products created before plugin activation (issue #8)
-* Fix: Fixed default form values sync for variable products (issue #11)
+* Fix: Fixed default attributes for variable products were not synced (issue #11)
 * Fix: Fixed non-taxonomy attributes were not synced (issue #12)
 * Fix: Fixed taxonomy attributes are not translated in cart and checkout pages
 
