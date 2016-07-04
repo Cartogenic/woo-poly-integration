@@ -1,4 +1,4 @@
-# [Wordpress  WooCommerce Polylang Integration ](https://github.com/hyyan/woo-poly-integration/)
+# [Wordpress WooCommerce Polylang Integration ](https://github.com/decarvalho/woo-poly-integration/)
 
 This plugin makes it possible to run multilingual e-commerce sites using WooCommerce and Polylang.
 
@@ -21,7 +21,7 @@ to Hyyan for this great plugin.
   - [x] Product Gallery
 - [x] Order Translation
 - [x] Stock Synchronization
-- [x] Cart Synchronization `Without Variation Support`
+- [x] Cart Synchronization
 - [x] Coupon Synchronization
 - [x] Emails
 - [x] Reports
