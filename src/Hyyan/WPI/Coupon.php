@@ -40,45 +40,41 @@ class Coupon
      *
      * @return \WC_Coupon
      */
-    public function couponLoaded(\WC_Coupon $coupon)
-    {
+    public function couponLoaded( \WC_Coupon $coupon ) {
 
-        $productIDS = array();
-        $excludeProductIDS = array();
-        $productCategoriesIDS = array();
-        $excludeProductCategoriesIDS = array();
+        $product_ids                  = array();
+        $exclude_product_ids          = array();
+        $product_categories_ids       = array();
+        $exclude_product_category_ids = array();
 
         foreach ($coupon->product_ids as $id) {
-            $productIDS = array_merge(
-                    $productIDS
-                    , $this->getProductPostTranslationIDS($id)
-            );
+            foreach ( $this->getProductPostTranslationIDS( $id ) as $_id ) {
+                $product_ids[] = $_id;
+            }
         }
+
         foreach ($coupon->exclude_product_ids as $id) {
-            $excludeProductIDS = array_merge(
-                    $excludeProductIDS
-                    , $this->getProductPostTranslationIDS($id)
-            );
+            foreach ( $this->getProductPostTranslationIDS( $id ) as $_id ) {
+                $exclude_product_ids[] = $_id;
+            }
         }
 
         foreach ($coupon->product_categories as $id) {
-            $productCategoriesIDS = array_merge(
-                    $productCategoriesIDS
-                    , $this->getProductTermTranslationIDS($id)
-            );
+            foreach ( $this->getProductTermTranslationIDS( $id ) as $_id ) {
+                $product_categories_ids[] = $_id;
+            }
         }
 
         foreach ($coupon->exclude_product_categories as $id) {
-            $excludeProductCategoriesIDS = array_merge(
-                    $excludeProductCategoriesIDS
-                    , $this->getProductTermTranslationIDS($id)
-            );
+            foreach ( $this->getProductTermTranslationIDS( $id ) as $_id ) {
+                $exclude_product_category_ids[] = $_id;
+            }
         }
 
-        $coupon->product_ids = $productIDS;
-        $coupon->exclude_product_ids = $excludeProductIDS;
-        $coupon->product_categories = $productCategoriesIDS;
-        $coupon->exclude_product_categories = $excludeProductCategoriesIDS;
+        $coupon->product_ids                = $product_ids;
+        $coupon->exclude_product_ids        = $exclude_product_ids;
+        $coupon->product_categories         = $product_categories_ids;
+        $coupon->exclude_product_categories = $exclude_product_category_ids;
 
         return $coupon;
     }
