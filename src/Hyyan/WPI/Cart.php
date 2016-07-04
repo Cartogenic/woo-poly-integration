@@ -94,34 +94,6 @@ class Cart {
 
         switch ( $cart_item_data->product_type ) {
             case 'variation':
-                /*
-                // Get product translation in current language
-                $product_translation = Utilities::getProductTranslationByID( $cart_product_id );
-
-                if ( $product_translation && $product_translation->id != $cart_product_id ) {
-
-                    // Found a translation:
-                    // 1. Get duplication key metadata value from the variation in the cart
-                    $meta = get_post_meta( $cart_variation_id, Variation::DUPLICATE_KEY, true );
-
-                    // 2. Get posts (variations) with duplication metadata value
-                    // for the product translation
-                    if ( $meta ) {
-                        $variation_post = get_posts( array(
-                            'meta_key'    => Variation::DUPLICATE_KEY,
-                            'meta_value'  => $meta,
-                            'post_type'   => 'product_variation',
-                            'post_parent' => $product_translation->id
-                        ) );
-                    }
-
-                    // 3. Get variation translation
-                    if ( isset( $variation_post ) && $variation_post && count( $variation_post ) == 1 ) {
-                        $cart_item_data_translation =  wc_get_product( $variation_post[0]->ID );
-                    }
-
-                }
-                */
                 $variation_translation      = $this->get_variation_translation( $cart_variation_id );
                 $cart_item_data_translation = $variation_translation ? $variation_translation : $cart_item_data_translation;
                 break;
