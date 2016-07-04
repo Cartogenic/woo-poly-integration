@@ -1,16 +1,16 @@
 <?php
 
 /*
- * Plugin Name: Hyyan WooCommerce Polylang Integration
- * Plugin URI: https://github.com/hyyan/woo-poly-integration/
- * Description: Integrates Woocommerce with Polylang
- * Author: Hyyan Abo Fakher
- * Author URI: https://github.com/hyyan
+ * Plugin Name: Woo Poly Integration
+ * Plugin URI: https://github.com/decarvalhoaa/woo-poly-integration/
+ * Description: Integrates WooCommerce and Polylang
+ * Author: Antonio de Carvalho
+ * Author URI: https://github.com/decarvalhoaa
  * Text Domain: woo-poly-integration
  * Domain Path: /languages
- * GitHub Plugin URI: hyyan/woo-poly-integration
+ * GitHub Plugin URI: decarvalhoaa/woo-poly-integration
  * License: MIT License
- * Version: 1.0.0 Dev
+ * Version: 1.0.0 Beta
  */
 
 /**

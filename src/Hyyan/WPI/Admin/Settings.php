@@ -54,10 +54,10 @@ class Settings extends \WeDevs_Settings_API
     public function registerMenu()
     {
         add_options_page(
-                __('Hyyan WooCommerce Polylang Integration', 'woo-poly-integration')
-                , __('WooPoly', 'woo-poly-integration')
+                __('Woo Poly Integration', 'woo-poly-integration')
+                , __('Woo Poly', 'woo-poly-integration')
                 , 'delete_posts'
-                , 'hyyan-wpi'
+                , 'woo-poly'
                 , array($this, 'outputPage')
         );
     }

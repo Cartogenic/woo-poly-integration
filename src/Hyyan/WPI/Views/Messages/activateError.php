@@ -3,21 +3,16 @@ if (!defined('ABSPATH')) {
     exit('restricted access');
 }
 ?>
-<h3>
-    <?php
-    _e('Hyyan WooCommerce Polylang Integration Plugin', 'woo-poly-integration');
-    ?>
-</h3>
+
+<h3><?php _e( 'Woo Poly Integration Plugin', 'woo-poly-integration' ); ?></h3>
 <p>
     <?php
-    _e('The plugin can not function correctly , the plugin requires
-        WooCommerce and Polylang plugins'
-            , 'woo-poly-integration'
-    );
+    _e( 'This plugin requires WooCommerce and Polylang plugins', 'woo-poly-integration' );
     ?>
 <p>
 <hr>
-<?php _e('Plugins Sites : ', 'woo-poly-integration'); ?>
+
+<?php _e( 'Plugins Websites: ', 'woo-poly-integration' ); ?>
 <a href="https://wordpress.org/plugins/woocommerce/">
     <?php _e('WooCommerce', 'woo-poly-integration'); ?>
 </a>

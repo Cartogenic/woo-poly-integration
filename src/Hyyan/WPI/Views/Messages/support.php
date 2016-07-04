@@ -6,29 +6,45 @@ if (!defined('ABSPATH')) {
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
         <td width="20%" align="middle" style="vertical-align: central">
-            <img src="http://www.gravatar.com/avatar/4f51a48cb8de5bb5c4c2bfcb9c6ef500?s=150"
+            <img src="http://www.gravatar.com/avatar/bf50a40dc528b0be4a95ab34567b7699?s=150"
                  style="padding: 2% ;vertical-align: top"/>
         </td>
         <td style="padding-left: 2% ; padding-right: 2%">
-            <h3>
-                <?php
-                _e(
-                        'Hyyan WooCommerce Polylang Integration Plugin'
-                        , 'woo-poly-integration'
-                )
-                ?>
-            </h3>
+            <h3><?php _e( 'Woo Poly Integration Plugin', 'woo-poly-integration' ); ?> </h3>
+
             <p><?php echo \Hyyan\WPI\Plugin::getView('badges'); ?></p>
+
             <p>
                 <?php
-                _e('Hello, my name is <b>Hyyan Abo Fakher</b>, and I am the developer
-                   of plugin <b>Hyyan WooCommerce Polylang Integration</b>.<br>
-                   If you like this plugin, please write a few words about it
+                _e(
+                   'Hello, my name is <b>Hyyan Abo Fakher</b>, and I am the developer
+                   of <b>Woo Poly Integration</b> plugin.',
+                   'woo-poly-integration'
+                );
+                ?>
+            <p>
+
+            <p>
+                <?php
+                _e(
+                   'This is a fork of the <a href="https://wordpress.org/plugins/woo-poly-integration/">
+                    Hyyan WooCommerce Polylang Integration</a> plugin develop by Hyyan
+                    that is no longer mantained. Credit goes to Hyyan for this great
+                    plugin.',
+                    'woo-poly-integration'
+                );
+                ?>
+            </p>
+
+            <p>
+                <?php
+                _e(
+                   'If you found this plugin useful, please write a few words about it
                    at the <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/woo-poly-integration">wordpress.org</a>
-                   or <a target="_blank" href="https://twitter.com">twitter</a>
-                   It will help other people
-                   find this useful plugin more quickly.<br><b>Thank you!</b>'
-                        , 'woo-poly-integration'
+                   or <a target="_blank" href="https://twitter.com">twitter</a>. It will
+                   help other people find this plugin more quickly.<br>
+                   <b>Thank you!</b>',
+                   'woo-poly-integration'
                 );
                 ?>
             <p>
