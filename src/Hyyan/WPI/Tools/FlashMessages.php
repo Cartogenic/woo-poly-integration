@@ -124,7 +124,7 @@ final class FlashMessages
      */
     public static function getOptionName()
     {
-        return 'hyyan-wpi-flash-messages';
+        return 'woo-poly-flash-messages';
     }
 
     /**

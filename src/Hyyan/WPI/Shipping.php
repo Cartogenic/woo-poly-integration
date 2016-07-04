@@ -67,7 +67,7 @@ class Shipping
     public function disableSettings() {
 
         $currentScreen = get_current_screen();
-        if ( $currentScreen->id !== 'settings_page_hyyan-wpi' )
+        if ( $currentScreen->id !== 'settings_page_woo-poly' )
             return false;
 
         add_action( 'admin_print_scripts', array( $this, 'disableShippingClassFeature' ), 100 );

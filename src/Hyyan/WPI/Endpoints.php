@@ -337,7 +337,7 @@ class Endpoints
             'edit-shop_order',
             'woocommerce_page_wc-settings',
             'settings_page_mlang',
-            'hyyan-wpi'
+            'woo-poly'
         );
         if (in_array($screen->id, $allowedPages)) {
             FlashMessages::add(

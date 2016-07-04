@@ -17,17 +17,17 @@ if (!defined('ABSPATH')) {
             <p>
                 <?php
                 _e(
-                   'Hello, my name is <b>Hyyan Abo Fakher</b>, and I am the developer
+                   'Hello, my name is <b>Antonio de Carvalho</b>, and I am the developer
                    of <b>Woo Poly Integration</b> plugin.',
                    'woo-poly-integration'
                 );
                 ?>
-            <p>
+            </p>
 
             <p>
                 <?php
                 _e(
-                   'This is a fork of the <a href="https://wordpress.org/plugins/woo-poly-integration/">
+                   'This plugin is a fork of the <a href="https://wordpress.org/plugins/woo-poly-integration/">
                     Hyyan WooCommerce Polylang Integration</a> plugin develop by Hyyan
                     that is no longer mantained. Credit goes to Hyyan for this great
                     plugin.',
@@ -42,12 +42,13 @@ if (!defined('ABSPATH')) {
                    'If you found this plugin useful, please write a few words about it
                    at the <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/woo-poly-integration">wordpress.org</a>
                    or <a target="_blank" href="https://twitter.com">twitter</a>. It will
-                   help other people find this plugin more quickly.<br>
-                   <b>Thank you!</b>',
+                   help other people find this plugin more quickly.<br><br>
+
+                   Thank you!',
                    'woo-poly-integration'
                 );
                 ?>
-            <p>
+            </p>
             <hr>
             <?php echo \Hyyan\WPI\Plugin::getView('social') ?>
         </td>

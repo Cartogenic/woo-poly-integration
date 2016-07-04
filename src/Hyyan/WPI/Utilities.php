@@ -174,7 +174,7 @@ final class Utilities
     public static function jsScriptWrapper($ID, $code, $jquery = true, $return = false)
     {
         $result = '';
-        $prefix = 'hyyan-wpi-';
+        $prefix = 'woo-poly';
         $header = sprintf('<script type="text/javascript" id="%s">', $prefix . $ID);
         $footer = '</script>';
 
