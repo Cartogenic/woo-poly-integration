@@ -311,11 +311,6 @@ final class Utilities
 
         }
 
-        //error_log( '[GET DEF. ATTRS TRANSLATION] def. attrs: ' . print_r( $default_attributes, true ) );
-        //error_log( '[GET DEF. ATTRS TRANSLATION] terms: ' . print_r( $terms, true ) );
-        //error_log( '[GET DEF. ATTRS TRANSLATION] langs: ' . print_r( $langs, true ) );
-        //error_log( '[GET DEF. ATTRS TRANSLATION] translated attrs: ' . print_r ( ! empty( $translated_attributes  ) ? $translated_attributes : false, true ) );
-
         return $translated_attributes;
 
     }

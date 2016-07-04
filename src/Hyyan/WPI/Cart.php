@@ -31,7 +31,9 @@ class Cart {
         add_filter( 'woocommerce_add_to_cart_product_id', array( $this, 'add_to_cart' ), 10, 1 );
 
         // handle cart translation
-        add_filter( 'woocommerce_cart_item_product', array( $this, 'translate_cart' ), 10, 2 );
+        add_filter( 'woocommerce_cart_item_product', array( $this, 'translate_cart_item_product' ), 10, 2 );
+        add_filter( 'woocommerce_cart_item_product_id', array( $this, 'translate_cart_item_product_id' ), 10, 1 );
+        add_filter( 'woocommerce_cart_item_permalink', array( $this, 'translate_cart_item_permalink' ), 10, 2 );
         add_filter( 'woocommerce_get_item_data', array( $this, 'translate_cart_item_data' ), 10, 2 );
 
         // handle the update of cart widget when language is switched
@@ -82,17 +84,17 @@ class Cart {
      *
      * @return \WC_Product|\WC_Product_Variation
      */
-    public function translate_cart( $cart_item_data, $cart_item ) {
+    public function translate_cart_item_product( $cart_item_data, $cart_item ) {
 
-        $cart_product_id   = $cart_item['product_id'];
-        $cart_variation_id = $cart_item['variation_id'];
+        $cart_product_id   = isset( $cart_item['product_id'] ) ? $cart_item['product_id'] : 0;
+        $cart_variation_id = isset( $cart_item['variation_id'] ) ? $cart_item['variation_id'] : 0;
 
         // By default, returns the same input
         $cart_item_data_translation = $cart_item_data;
 
         switch ( $cart_item_data->product_type ) {
             case 'variation':
-
+                /*
                 // Get product translation in current language
                 $product_translation = Utilities::getProductTranslationByID( $cart_product_id );
 
@@ -119,17 +121,65 @@ class Cart {
                     }
 
                 }
+                */
+                $variation_translation      = $this->get_variation_translation( $cart_variation_id );
+                $cart_item_data_translation = $variation_translation ? $variation_translation : $cart_item_data_translation;
                 break;
 
             case 'simple':
             default:
-                $cart_item_data_translation = Utilities::getProductTranslationByID( $cart_product_id );
+                $product_translation        = Utilities::getProductTranslationByID( $cart_product_id );
+                $cart_item_data_translation = $product_translation ? $product_translation : $cart_item_data_translation;
                 break;
         }
 
         return $cart_item_data_translation;
     }
 
+    /**
+     * Replace products id in cart with id of product translation in the current
+     * language
+     *
+     * @param int       $cart_product_id    Product Id
+     *
+     * @return int Id of the product translation
+     */
+    public function translate_cart_item_product_id( $cart_product_id ) {
+        $translation_id = pll_get_post( $cart_product_id );
+        return $translation_id ? $translation_id : $cart_product_id;
+    }
+
+    /**
+     * Translate product attributes in the product permalink querystring
+     *
+     * @param string    $item_permalink    Product permalink
+     * @param array     $cart_item         Cart item
+     *
+     * @return string   Translated permalink
+     */
+    public function translate_cart_item_permalink( $item_permalink, $cart_item ) {
+
+        //$cart_product_id   = isset( $cart_item['product_id'] ) ? $cart_item['product_id'] : 0;
+        $cart_variation_id = isset( $cart_item['variation_id'] ) ? $cart_item['variation_id'] : 0;
+
+        If ( $cart_variation_id !== 0 ) {
+            // Variation
+            $variation_translation = $this->get_variation_translation( $cart_variation_id );
+            return $variation_translation->get_permalink();
+        }
+
+        return $item_permalink;
+
+    }
+
+    /**
+     * Translate product variation attributes
+     *
+     * @param array     $item_data      Variation attributes
+     * @param array     $cart_item      Cart item
+     *
+     * @return array   Translated attaributes
+     */
     public function translate_cart_item_data( $item_data, $cart_item ) {
 
         $item_data_translation = array();
@@ -385,10 +435,10 @@ class Cart {
 
         $_variation = false;
 
-        // Get parent product translation for the given language
-        $variation = wc_get_product( $variation_id );
-        $parent = $variation->parent;
-        $_product_id = pll_get_post( $parent->id, $lang );
+        // Get parent product translation id for the given language
+        $variation   = wc_get_product( $variation_id );
+        $parent      = $variation ? $variation->parent : null;
+        $_product_id = $parent ? pll_get_post( $parent->id, $lang ) : null;
 
         // Get variation translation using the duplication metadata value
         $meta = get_post_meta( $variation_id, Variation::DUPLICATE_KEY, true );

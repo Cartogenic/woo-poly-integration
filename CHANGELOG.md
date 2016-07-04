@@ -1,11 +1,13 @@
 ###1.0.0
 
 * Dev: Added support for WooCommerce 2.6
-* Dev: Code and code documentation clean up
-* Fix: Fixed product type sync for products created before plugin activation (issue #8)
-* Fix: Fixed default attributes for variable products were not synced (issue #11)
-* Fix: Fixed non-taxonomy attributes were not synced (issue #12)
-* Fix: Fixed taxonomy attributes are not translated in cart and checkout pages
+* Dev: Several code and code documentation improvements
+* Fix: Product type sync for products created before plugin activation (issue #8)
+* Fix: Default attributes for variable products not synced (issue #11)
+* Fix: Non-taxonomy attributes not synced (issue #12)
+* Fix: Taxonomy attributes not translated in cart and checkout pages (issue #9)
+* Fix: Variation attributes not translated in cart permalinks
+* Tweak: Wrong product id (not translated) in remove from cart links
 
 ###0.27
 
