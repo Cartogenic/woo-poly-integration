@@ -1,7 +1,8 @@
-###1.0.0
+###1.0.0b (Beta)
 
 * Dev: Added support for WooCommerce 2.6
-* Dev: Several code and code documentation improvements
+* Dev: Improvements to WordPress Coding Standards and code documentation
+* Dev: Change of plugin name, root dir and textdomian for submission to wordpress.org
 * Fix: Product type sync for products created before plugin activation (issue #8)
 * Fix: Default attributes for variable products not synced (issue #11)
 * Fix: Non-taxonomy attributes not synced (issue #12)
