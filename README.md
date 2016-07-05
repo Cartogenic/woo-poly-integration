@@ -1,4 +1,4 @@
-# [Wordpress WooCommerce Polylang Integration ](https://github.com/decarvalho/woopoly/)
+# [WooPoly: The Wordpress WooCommerce Polylang integration plugin](https://github.com/decarvalho/woopoly/)
 
 This Wordpress plugin makes it possible to run multilingual e-commerce sites using WooCommerce and Polylang.
 
