@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
                  style="padding: 2% ;vertical-align: top"/>
         </td>
         <td style="padding-left: 2% ; padding-right: 2%">
-            <h3><?php _e( 'Woo Poly Integration Plugin', 'woo-poly-integration' ); ?> </h3>
+            <h3><?php _e( 'WooPoly Plugin', 'woopoly' ); ?> </h3>
 
             <p><?php echo \Hyyan\WPI\Plugin::getView('badges'); ?></p>
 
@@ -18,8 +18,8 @@ if (!defined('ABSPATH')) {
                 <?php
                 _e(
                    'Hello, my name is <b>Antonio de Carvalho</b>, and I am the developer
-                   of <b>Woo Poly Integration</b> plugin.',
-                   'woo-poly-integration'
+                   of <b>WooPoly</b> plugin.',
+                   'woopoly'
                 );
                 ?>
             </p>
@@ -31,7 +31,7 @@ if (!defined('ABSPATH')) {
                     Hyyan WooCommerce Polylang Integration</a> plugin develop by Hyyan
                     that is no longer mantained. Credit goes to Hyyan for this great
                     plugin.',
-                    'woo-poly-integration'
+                    'woopoly'
                 );
                 ?>
             </p>
@@ -45,7 +45,7 @@ if (!defined('ABSPATH')) {
                    help other people find this plugin more quickly.<br><br>
 
                    Thank you!',
-                   'woo-poly-integration'
+                   'woopoly'
                 );
                 ?>
             </p>

@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 ?>
 <h3>
     <span>
-        <?php _e('About this Plugin', 'woo-poly-integration'); ?>
+        <?php _e('About this Plugin', 'woopoly'); ?>
     </span>
 </h3>
 <div class="inside">
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
                'This plugin is an open source project which aims to fill the gap between
                <a href="https://wordpress.org/plugins/woocommerce/">Woocommerce</a>
                and <a href="https://wordpress.org/plugins/polylang/">Polylang</a>',
-               'woo-poly-integration'
+               'woopoly'
             );
             ?>
         </p>
@@ -27,12 +27,12 @@ if (!defined('ABSPATH')) {
                 Hyyan WooCommerce Polylang Integration</a> plugin develop by Hyyan
                 that is no longer mantained. Credit goes to Hyyan for this great
                 plugin.',
-                'woo-poly-integration'
+                'woopoly'
             );
             ?>
         </p>
         <p>
-            <?php _e('Author: ', 'woo-poly-integration') ?>
+            <?php _e('Author: ', 'woopoly') ?>
             <a href="https://github.com/decarvalhoaa">Antonio de Carvalho</a>
         </p>
 

@@ -35,12 +35,14 @@ class MetasList extends AbstractSettings
     {
         return array(
             array(
-                'title' => __('Metas List', 'woo-poly-integration'),
+                'title' => __('Metas List', 'woopoly'),
                 'desc'  => __(
-                              'The section will allow you to controll which metas should be
-                              synced between product and its translation, please ignore
-                              this section if you do not understand the meaning of this.',
-                              'woo-poly-integration'
+                              'The section will allow you to fine tune which metadata
+                              should be synced between products and their translations.
+                              The default values are appropriate for the large majority of
+                              the users. It is safe to ignore these settings if you do not
+                              understand their meaning.',
+                              'woopoly'
                 )
             )
         );

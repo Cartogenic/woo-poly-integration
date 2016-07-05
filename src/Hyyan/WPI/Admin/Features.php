@@ -35,11 +35,10 @@ class Features extends AbstractSettings
     {
         return array(
             array(
-                'title' => __('Features', 'woo-poly-integration'),
+                'title' => __('Features', 'woopoly'),
                 'desc' => __(
-                        ' The section will allow you to Enable/Disable
-                          Plugin Features.'
-                        , 'woo-poly-integration'
+                        ' The section allows you to enable/disable the plugin features.'
+                        , 'woopoly'
                 )
             )
         );
@@ -55,91 +54,91 @@ class Features extends AbstractSettings
                 'name' => 'fields-locker',
                 'type' => 'checkbox',
                 'default' => 'on',
-                'label' => __('Fields Locker', 'woo-poly-integration'),
+                'label' => __('Fields Locker', 'woopoly'),
                 'desc' => __(
                         'Fields locker makes it easy for user to know which
                          field to translate and which to ignore '
-                        , 'woo-poly-integration'
+                        , 'woopoly'
                 )
             ),
             array(
                 'name' => 'emails',
                 'type' => 'checkbox',
                 'default' => 'on',
-                'label' => __('Emails', 'woo-poly-integration'),
+                'label' => __('Emails', 'woopoly'),
                 'desc' => __(
                         'Use order language whenever woocommerce sends order emails'
-                        , 'woo-poly-integration'
+                        , 'woopoly'
                 )
             ),
             array(
                 'name' => 'reports',
                 'type' => 'checkbox',
                 'default' => 'on',
-                'label' => __('Reports', 'woo-poly-integration'),
+                'label' => __('Reports', 'woopoly'),
                 'desc' => __(
                         'Enable reports language filtering and combining'
-                        , 'woo-poly-integration'
+                        , 'woopoly'
                 )
             ),
             array(
                 'name' => 'coupons',
                 'type' => 'checkbox',
                 'default' => 'on',
-                'label' => __('Coupons Sync', 'woo-poly-integration'),
+                'label' => __('Coupons Sync', 'woopoly'),
                 'desc' => __(
-                        'Apply coupons rules for product and its translations'
-                        , 'woo-poly-integration'
+                        'Apply coupons rules for products and their translations'
+                        , 'woopoly'
                 )
             ),
             array(
                 'name' => 'stock',
                 'type' => 'checkbox',
                 'default' => 'on',
-                'label' => __('Stock Sync', 'woo-poly-integration'),
+                'label' => __('Stock Sync', 'woopoly'),
                 'desc' => __(
-                        'Sync stock for product and its translations'
-                        , 'woo-poly-integration'
+                        'Sync stock for products and their translations'
+                        , 'woopoly'
                 )
             ),
             array(
                 'name' => 'categories',
                 'type' => 'checkbox',
                 'default' => 'on',
-                'label' => __('Translate Categories', 'woo-poly-integration'),
+                'label' => __('Translate Categories', 'woopoly'),
                 'desc' => __(
-                        'Enable categories translations'
-                        , 'woo-poly-integration'
+                        'Enable categories translation'
+                        , 'woopoly'
                 )
             ),
             array(
                 'name' => 'tags',
                 'type' => 'checkbox',
                 'default' => 'on',
-                'label' => __('Translate Tags', 'woo-poly-integration'),
+                'label' => __('Translate Tags', 'woopoly'),
                 'desc' => __(
-                        'Enable tags translations'
-                        , 'woo-poly-integration'
+                        'Enable tags translation'
+                        , 'woopoly'
                 )
             ),
             array(
                 'name' => 'attributes',
                 'type' => 'checkbox',
                 'default' => 'on',
-                'label' => __('Translate Attributes', 'woo-poly-integration'),
+                'label' => __('Translate Attributes', 'woopoly'),
                 'desc' => __(
-                        'Enable Attributes translations'
-                        , 'woo-poly-integration'
+                        'Enable Attributes translation'
+                        , 'woopoly'
                 )
             ),
             array(
                 'name' => 'shipping-class',
                 'type' => 'checkbox',
                 'default' => 'off',
-                'label' => __('Translate Shipping Classes', 'woo-poly-integration'),
+                'label' => __('Translate Shipping Classes', 'woopoly'),
                 'desc' => __(
-                        'Enable Shipping Classes translations' . ( Utilities::woocommerce_version_check( '2.6' ) ? ' (not supported for WooCommerce versions >= 2.6)' : '' )
-                        , 'woo-poly-integration'
+                        'Enable Shipping Classes translation' . ( Utilities::woocommerce_version_check( '2.6' ) ? ' (not supported for WooCommerce versions >= 2.6)' : '' )
+                        , 'woopoly'
                 )
             )
         );

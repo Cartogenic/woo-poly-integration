@@ -123,8 +123,8 @@ class Meta
         $default = apply_filters(HooksInterface::PRODUCT_META_SYNC_FILTER, array(
             // general
             'general' => array(
-                'name' => __('General Metas', 'woo-poly-integration'),
-                'desc' => __('General Metas', 'woo-poly-integration'),
+                'name' => __('General Metas', 'woopoly'),
+                'desc' => __('General Metas', 'woopoly'),
                 'metas' => array(
                     'product-type',
                     '_virtual',
@@ -153,8 +153,8 @@ class Meta
             ),
             // stock
             'stock' => array(
-                'name' => __('Stock Metas', 'woo-poly-integration'),
-                'desc' => __('Stock Metas', 'woo-poly-integration'),
+                'name' => __('Stock Metas', 'woopoly'),
+                'desc' => __('Stock Metas', 'woopoly'),
                 'metas' => array(
                     '_manage_stock',
                     '_stock',
@@ -165,8 +165,8 @@ class Meta
             ),
             // shipping
             'shipping' => array(
-                'name' => __('Shipping Metas', 'woo-poly-integration'),
-                'desc' => __('Shipping Metas', 'woo-poly-integration'),
+                'name' => __('Shipping Metas', 'woopoly'),
+                'desc' => __('Shipping Metas', 'woopoly'),
                 'metas' => array(
                     '_weight',
                     '_length',
@@ -177,8 +177,8 @@ class Meta
             ),
             // attributes
             'Attributes' => array(
-                'name' => __('Attributes Metas', 'woo-poly-integration'),
-                'desc' => __('Attributes Metas', 'woo-poly-integration'),
+                'name' => __('Attributes Metas', 'woopoly'),
+                'desc' => __('Attributes Metas', 'woopoly'),
                 'metas' => array(
                     '_product_attributes',
                     '_default_attributes',
@@ -186,8 +186,8 @@ class Meta
             ),
             // Taxes
             'Taxes' => array(
-                'name' => __('Taxes Metas', 'woo-poly-integration'),
-                'desc' => __('Taxes Metas', 'woo-poly-integration'),
+                'name' => __('Taxes Metas', 'woopoly'),
+                'desc' => __('Taxes Metas', 'woopoly'),
                 'metas' => array(
                     '_tax_status',
                     '_tax_class',

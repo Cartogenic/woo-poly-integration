@@ -124,7 +124,7 @@ final class FlashMessages
      */
     public static function getOptionName()
     {
-        return 'woo-poly-flash-messages';
+        return 'woopoly-flash-messages';
     }
 
     /**

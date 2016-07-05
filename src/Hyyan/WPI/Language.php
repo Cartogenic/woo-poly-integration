@@ -52,10 +52,10 @@ class Language
             'name' => 'language-downloader',
             'type' => 'checkbox',
             'default' => 'on',
-            'label' => __('Translation Downloader', 'woo-poly-integration'),
+            'label' => __('Translation Downloader', 'woopoly'),
             'desc' => __(
                     'Download Woocommerce translations when a new polylang language is added'
-                    , 'woo-poly-integration'
+                    , 'woopoly'
             )
         );
 

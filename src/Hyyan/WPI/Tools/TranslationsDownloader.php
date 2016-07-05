@@ -45,7 +45,7 @@ class TranslationsDownloader
             $notAvaliable = sprintf(
                     __(
                             'Woocommerce translation %s can not be found in : <a href="%2$s">%2$s</a>'
-                            , 'woo-poly-integration'
+                            , 'woopoly'
                     )
                     , sprintf('%s(%s)', $name, $locale)
                     , static::getRepoUrl()

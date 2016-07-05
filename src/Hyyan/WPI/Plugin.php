@@ -41,7 +41,7 @@ class Plugin
     public function loadTextDomain()
     {
         load_plugin_textdomain(
-                'woo-poly-integration'
+                'woopoly'
                 , false
                 , plugin_basename(dirname(Hyyan_WPI_DIR)) . '/languages'
         );

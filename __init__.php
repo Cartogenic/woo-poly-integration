@@ -1,14 +1,14 @@
 <?php
 
 /*
- * Plugin Name: Woo Poly Integration
- * Plugin URI: https://github.com/decarvalhoaa/woo-poly-integration/
- * Description: Integrates WooCommerce and Polylang
+ * Plugin Name: WooPoly
+ * Plugin URI: https://github.com/decarvalhoaa/woopoly/
+ * Description: Wordpress plugin that integrates WooCommerce and Polylang
  * Author: Antonio de Carvalho
  * Author URI: https://github.com/decarvalhoaa
- * Text Domain: woo-poly-integration
+ * Text Domain: woopoly
  * Domain Path: /languages
- * GitHub Plugin URI: decarvalhoaa/woo-poly-integration
+ * GitHub Plugin URI: decarvalhoaa/woopoly
  * License: MIT License
  * Version: 1.0.0 Beta
  */

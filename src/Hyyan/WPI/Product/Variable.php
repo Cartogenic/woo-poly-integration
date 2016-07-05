@@ -256,8 +256,8 @@ class Variable
     {
 
         $metas['Variables'] = array(
-            'name' => __('Variables Metas', 'woo-poly-integration'),
-            'desc' => __('Variables Metas', 'woo-poly-integration'),
+            'name' => __('Variables Metas', 'woopoly'),
+            'desc' => __('Variables Metas', 'woopoly'),
             'metas' => array(
                 '_min_variation_price',
                 '_max_variation_price',
@@ -326,8 +326,8 @@ class Variable
                     . '     content     : "%s" ,'
                     . '     defaultLang : "%s"'
                     . '};'
-                    , __('Wrong Language For Variable Product', 'woo-poly-integration')
-                    , __("Variable product must be created in the default language first or things will get messy. <br> <a href='https://github.com/hyyan/woo-poly-integration/tree/master#what-you-need-to-know-about-this-plugin' target='_blank'>Read more , to know why</a>", "woo-poly-integration")
+                    , __('Wrong default language for Variable Products', 'woopoly')
+                    , __("Variable products must be created in the default language first due to a plugin design limitation. <br> <a href='https://github.com/decarvalhoaa/woopoly/tree/master#what-you-need-to-know-about-this-plugin' target='_blank'>Read more</a>", 'woopoly' )
                     , pll_default_language()
             );
 
@@ -378,7 +378,7 @@ class Variable
                         . ' $("#options-lang").prepend('
                         . '     "<p class=\'update-nag\'>%s</p>"'
                         . ');'
-                        , __('You can not change the default language ,Becuase you are using variable products', 'woo-poly-integration')
+                        , __('You can not change the default language, when adding variable products', 'woopoly')
                 );
                 Utilities::jsScriptWrapper($jsID, $code);
             }, 100);

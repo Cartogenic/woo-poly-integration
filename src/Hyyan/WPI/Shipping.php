@@ -67,7 +67,7 @@ class Shipping
     public function disableSettings() {
 
         $currentScreen = get_current_screen();
-        if ( $currentScreen->id !== 'settings_page_woo-poly' )
+        if ( $currentScreen->id !== 'settings_page_woopoly' )
             return false;
 
         add_action( 'admin_print_scripts', array( $this, 'disableShippingClassFeature' ), 100 );
@@ -173,7 +173,7 @@ class Shipping
                 $setting = get_option( $plugin_id . $method_id . '_settings' );
 
                 if ( $setting && isset( $setting['title'] ) ) {
-                    pll_register_string( $plugin_id . $method_id . '_shipping_method', $setting['title'], __( 'Woocommerce Shipping Methods', 'woo-poly-integration') );
+                    pll_register_string( $plugin_id . $method_id . '_shipping_method', $setting['title'], __( 'Woocommerce Shipping Methods', 'woopoly') );
                 }
             }
 

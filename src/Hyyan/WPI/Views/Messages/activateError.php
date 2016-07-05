@@ -4,19 +4,19 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<h3><?php _e( 'Woo Poly Integration Plugin', 'woo-poly-integration' ); ?></h3>
+<h3><?php _e( 'WooPoly Plugin', 'woopoly' ); ?></h3>
 <p>
     <?php
-    _e( 'This plugin requires WooCommerce and Polylang plugins', 'woo-poly-integration' );
+    _e( 'This plugin requires WooCommerce and Polylang plugins', 'woopoly' );
     ?>
 <p>
 <hr>
 
-<?php _e( 'Plugins Websites: ', 'woo-poly-integration' ); ?>
+<?php _e( 'Download Plugins: ', 'woopoly' ); ?>
 <a href="https://wordpress.org/plugins/woocommerce/">
-    <?php _e('WooCommerce', 'woo-poly-integration'); ?>
+    <?php _e('WooCommerce', 'woopoly'); ?>
 </a>
 |
 <a href="https://wordpress.org/plugins/polylang/">
-    <?php _e('Polylang', 'woo-poly-integration'); ?>
+    <?php _e('Polylang', 'woopoly'); ?>
 </a>

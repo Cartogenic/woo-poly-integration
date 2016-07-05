@@ -1,6 +1,6 @@
 {
-    "name": "decarvalhoaa/woo-poly-integration",
-    "description": "Integrates WooCommerce and Polylang",
+    "name": "decarvalhoaa/woopoly",
+    "description": "Wordpress plugin that integrates Polylang and WooCommerce",
     "type": "wordpress-plugin",
     "license": "MIT",
     "authors": [
@@ -11,7 +11,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/decarvalhoaa/woo-poly-integration/issues"
+        "issues": "https://github.com/decarvalhoaa/woopoly/issues"
     },
     "keywords": [
         "wordpress",
@@ -20,7 +20,8 @@
         "wordpress muplugin",
         "polylang",
         "woocommerce",
-        "polylang woocommerce integration",
+        "woocommerce polylang integration",
+        "woopoly",
         "hyyan",
         "wpi"
     ],

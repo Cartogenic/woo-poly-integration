@@ -31,14 +31,14 @@
 </script>
 <div class="wrap" >
     <div class="wpi-social-column">
-        <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://wordpress.org/plugins/woo-poly-integration/" data-text="Woo Poly Integration plugin, makes it easy to run multilingual WooCommerce online stores." data-via="decarvalhoaa">Tweet</a>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="https://wordpress.org/plugins/woopoly/" data-text="WooPoly wordpress plugin, makes it easy to run multilingual WooCommerce online stores." data-via="decarvalhoaa">Tweet</a>
     </div>
     <div class="wpi-social-column">
         <div id="fb-root"></div>
-        <div class="fb-share-button" data-href="https://wordpress.org/plugins/woo-poly-integration/" data-layout="button_count"></div>
+        <div class="fb-share-button" data-href="https://wordpress.org/plugins/woopoly/" data-layout="button_count"></div>
     </div>
     <div class="wpi-social-column">
-        <iframe src="https://ghbtns.com/github-btn.html?user=decarvalhoaa&repo=woo-poly-integration&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+        <iframe src="https://ghbtns.com/github-btn.html?user=decarvalhoaa&repo=woopoly&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
     </div>
 </div>
 <div style="clear: both"></div>

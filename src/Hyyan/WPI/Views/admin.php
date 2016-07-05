@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
 }
 ?>
 <div class="wrap">
-    <h2> <?php _e('Woo Poly Advanced Options', 'woo-poly-integration'); ?></h2>
+    <h2> <?php _e('WooPoly Settings', 'woopoly'); ?></h2>
     <div id="poststuff">
         <div id="post-body" class="metabox-holder columns-2">
 

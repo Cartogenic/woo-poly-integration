@@ -60,7 +60,7 @@ class Attributes implements TaxonomiesInterface
         }
 
         $attrs = wc_get_attribute_taxonomies();
-        $section = __('Woocommerce Attributes', 'woo-poly-integration');
+        $section = __('Woocommerce Attributes', 'woopoly');
         foreach ($attrs as $attr) {
             pll_register_string(
                     $attr->attribute_label
@@ -107,7 +107,7 @@ class Attributes implements TaxonomiesInterface
         $stringTranslationURL = add_query_arg(array(
             'page' => 'mlang',
             'tab' => 'strings',
-            'group' => __('Woocommerce Attributes', 'woo-poly-integration')
+            'group' => __('Woocommerce Attributes', 'woopoly')
         ), admin_url('options-general.php'));
 
         /* Add attribute translate button */
@@ -116,7 +116,7 @@ class Attributes implements TaxonomiesInterface
                 '$("<a href=\'%s\' class=\'button button-primary button-large\'>%s</a><br><br>")'
                 . ' .insertBefore(".attributes-table");'
                 , $stringTranslationURL
-                , __('Translate Attributes Lables', 'woo-poly-integration')
+                , __('Translate Attributes Lables', 'woopoly')
         );
 
         /* Add attribute translate search link */
@@ -134,7 +134,7 @@ class Attributes implements TaxonomiesInterface
                 . ' $this.append(attrTranslateHref);'
                 . "\n});\n"
                 , $stringTranslationURL
-                , __('Translate', 'woo-poly-integration')
+                , __('Translate', 'woopoly')
         );
 
         /* Output code */

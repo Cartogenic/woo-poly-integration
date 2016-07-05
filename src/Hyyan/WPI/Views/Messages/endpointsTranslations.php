@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 
 printf(
         __('You can translate WooCommerce endpoints from Polylang Strings Transalations
-           tab. <a target="_blank" href="%s">%s</a>', 'woo-poly-integration'),
+           tab. <a target="_blank" href="%s">%s</a>', 'woopoly'),
         add_query_arg(
                 array(
                     'page' => 'mlang',
@@ -18,6 +18,6 @@ printf(
                 ),
                 admin_url( 'options-general.php' )
         ),
-        __( 'Translate', 'woo-poly-integration' )
+        __( 'Translate', 'woopoly' )
 );
 ?>

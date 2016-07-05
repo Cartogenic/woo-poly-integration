@@ -337,7 +337,7 @@ class Endpoints
             'edit-shop_order',
             'woocommerce_page_wc-settings',
             'settings_page_mlang',
-            'woo-poly'
+            'woopoly'
         );
         if (in_array($screen->id, $allowedPages)) {
             FlashMessages::add(
@@ -354,7 +354,7 @@ class Endpoints
      */
     public static function getPolylangStringSection()
     {
-        return __('Woocommerce Endpoints', 'woo-poly-integration');
+        return __('Woocommerce Endpoints', 'woopoly');
     }
 
 }

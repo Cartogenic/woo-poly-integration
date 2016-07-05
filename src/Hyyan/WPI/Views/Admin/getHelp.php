@@ -4,29 +4,29 @@ if (!defined('ABSPATH')) {
 }
 ?>
 <h3
-    ><span><?php _e('Need help?', 'woo-poly-integration'); ?></span>
+    ><span><?php _e('Need help?', 'woopoly'); ?></span>
 </h3>
 
 <div class="inside">
     <p>
         <?php
-        _e( 'Need help? Want to ask for new feature? Get in touch', 'woo-poly-integration' );
+        _e( 'Need help? Want to suggest a new feature? Get in touch', 'woopoly' );
         ?>
     </p>
     <ol>
         <li>
-            <a href="https://github.com/decarvalhoaa/woo-poly-integration/issues" target="_blank">
-                <?php _e('On Github', 'woo-poly-integration'); ?>
+            <a href="https://github.com/decarvalhoaa/woopoly/issues" target="_blank">
+                <?php _e('On Github', 'woopoly'); ?>
             </a>
         </li>
         <li>
-            <a href="https://wordpress.org/support/plugin/woo-poly-integration" target="_blank">
-                <?php _e('On Wordpress Support Forum', 'woo-poly-integration'); ?>
+            <a href="https://wordpress.org/support/plugin/woopoly" target="_blank">
+                <?php _e('On Wordpress Support Forum', 'woopoly'); ?>
             </a>
         </li>
         <li>
             <a href="mailto:decarvalhoaa@gmail.com" target="_blank">
-                <?php _e('On Email', 'woo-poly-integration'); ?>
+                <?php _e('On Email', 'woopoly'); ?>
             </a>
         </li>
     </ol>

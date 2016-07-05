@@ -54,10 +54,10 @@ class Settings extends \WeDevs_Settings_API
     public function registerMenu()
     {
         add_options_page(
-                __('Woo Poly Integration', 'woo-poly-integration')
-                , __('Woo Poly', 'woo-poly-integration')
+                __('WooPoly Settings', 'woopoly')
+                , __('WooPoly', 'woopoly')
                 , 'delete_posts'
-                , 'woo-poly'
+                , 'woopoly'
                 , array($this, 'outputPage')
         );
     }
