@@ -10,7 +10,7 @@
  * Domain Path: /languages
  * GitHub Plugin URI: decarvalhoaa/woopoly
  * License: MIT License
- * Version: 1.0.0b (Beta)
+ * Version: 1.0.0
  */
 
 /**

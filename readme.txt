@@ -107,6 +107,34 @@ Make sure to setup your permalinks in the admin backend.
 
 == Changelog ==
 
+= 1.0.0 =
+
+* Fix: Attribute selection language and attribute sync bug (#2, #16)
+* Fix: Fatal error on cart page if not all translations are available (#18)
+
 = 1.0.0b (Beta) =
 
 First release for wordpress.org
+
+== Fixed from Hyyan WooCommerce Polylang Integration plugin ==
+* Dev: Added support for WooCommerce 2.6
+* Dev: Improvements to WordPress Coding Standards and code documentation
+* Dev: Change of plugin name, root dir and textdomian for submission to wordpress.org
+* Fix: Product type sync for products created before plugin activation (issue #8)
+* Fix: Default attributes for variable products not synced (issue #11)
+* Fix: Non-taxonomy attributes not synced (issue #12)
+* Fix: Taxonomy attributes not translated in cart and checkout pages (issue #9)
+* Fix: Variation attributes not translated in cart permalinks
+* Tweak: Wrong product id (not translated) in remove from cart links
+* Fix: Order emails translations
+* Fix_ Payment gateways translation
+* Fix: Shipment methods translation
+* Fix: Broken 'my account' breadcrumbs links
+* Fix: Order details backend page html
+* Fix: PHP warning due to polylang deprecated methods
+* Fix: Product duplication in shop page when default language is changed
+* Fix: Total sales is synced even if product is not managing stock
+* Fix: Duplicator class PHP notice when product is being edited in quick mode
+* Fix: Random behaviour for product type sync
+* Fix: Tax class are not synced
+

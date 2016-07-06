@@ -1,3 +1,9 @@
+###1.0.0
+
+* Fix: Attribute selection language and attribute sync bug (#2, #16)
+* Fix: Fatal error on cart page if not all translations are available (#18)
+
+
 ###1.0.0b (Beta)
 
 * Dev: Added support for WooCommerce 2.6
