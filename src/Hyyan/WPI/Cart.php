@@ -137,7 +137,7 @@ class Cart {
         If ( $cart_variation_id !== 0 ) {
             // Variation
             $variation_translation = $this->get_variation_translation( $cart_variation_id );
-            return $variation_translation->get_permalink();
+            return $variation_translation ? $variation_translation->get_permalink() : $item_permalink;
         }
 
         return $item_permalink;
