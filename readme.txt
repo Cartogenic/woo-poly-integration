@@ -1,5 +1,6 @@
 === WooPoly ===
 Contributors: decarvalhoaa, hyyan
+Donate link: https://www.paypal.com/cgi-bin/webscr?hosted_button_id=YKMDTB62QYJUC&cmd=_s-xclick
 Tags: cms, commerce, e-commerce, e-shop, ecommerce, multilingual, products, shop, woocommerce, polylang, bilingual, international, language, localization, multilanguage, multilingual, translate, translation
 Requires at least: 3.8
 Tested up to: 4.5.2
@@ -137,4 +138,3 @@ First release for wordpress.org
 * Fix: Duplicator class PHP notice when product is being edited in quick mode
 * Fix: Random behaviour for product type sync
 * Fix: Tax class are not synced
-
