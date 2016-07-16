@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Hyyan Woocommerce Polylang Integration\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-06-08 10:12-0800\n"
-"POT-Revision-Date: Tue Jul 05 2016 17:55:52 GMT+0200 (CEST)\n"
+"POT-Revision-Date: Sun Jul 17 2016 01:07:35 GMT+0200 (CEST)\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Hyyan Abo Fakher <tiribthea4hyyan@gmail.com>\n"
 "Language-Team: Hyyan Abo Fakher <tiribthea4hyyan@gmail.com>\n"
@@ -34,7 +34,7 @@ msgid "https://github.com/decarvalhoaa/woopoly"
 msgstr ""
 
 #. Description of the plugin
-msgid "Wordpress plugin that integrates WooCommerce and Polylang"
+msgid "Integrates WooCommerce and Polylang"
 msgstr ""
 
 #. Author of the plugin
@@ -43,6 +43,10 @@ msgstr ""
 
 #. Author URI of the plugin
 msgid "https://github.com/decarvalhoaa"
+msgstr ""
+
+#: ../woopoly.php:113 ../woopoly.php:122
+msgid "Cheatin&#8217; huh?"
 msgstr ""
 
 #: ../src/Hyyan/WPI/Language.php:55
@@ -57,14 +61,26 @@ msgstr ""
 msgid "Woocommerce Endpoints"
 msgstr ""
 
-#: ../src/Hyyan/WPI/Cart.php:355
+#: ../src/Hyyan/WPI/Plugin.php:54
+msgid "Settings"
+msgstr ""
+
+#: ../src/Hyyan/WPI/Plugin.php:55
+msgid "Support"
+msgstr ""
+
+#: ../src/Hyyan/WPI/Plugin.php:56
+msgid "GitHub"
+msgstr ""
+
+#: ../src/Hyyan/WPI/Cart.php:352
 #, php-format
 msgid "%s is a required field"
 msgid_plural "%s are required fields"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../src/Hyyan/WPI/Cart.php:357
+#: ../src/Hyyan/WPI/Cart.php:354
 msgid "Please choose product options&hellip;"
 msgstr ""
 
@@ -179,7 +195,10 @@ msgid "WooPoly Plugin"
 msgstr ""
 
 #: ../src/Hyyan/WPI/Views/Messages/activateError.php:10
-msgid "This plugin requires WooCommerce and Polylang plugins"
+msgid ""
+"WooPoly Plugin has deactivated itself because WooCommerce and/or Polylang "
+"are no longer active. Please install and activate both plugins before "
+"activating this plugin."
 msgstr ""
 
 #: ../src/Hyyan/WPI/Views/Messages/activateError.php:15
@@ -213,7 +232,7 @@ msgstr ""
 
 #: ../src/Hyyan/WPI/Views/Messages/support.php:41
 msgid ""
-"If you found this plugin useful, please write a few words about it\n"
+"If you find this plugin useful, please write a few words about it\n"
 "                   at the <a target=\"_blank\" href=\"https://wordpress."
 "org/support/view/plugin-reviews/woo-poly-integration\">wordpress.org</a>\n"
 "                   or <a target=\"_blank\" href=\"https://twitter."
@@ -253,7 +272,7 @@ msgid ""
 "           users forum alive by making a small donation."
 msgstr ""
 
-#: ../src/Hyyan/WPI/Views/Admin/support.php:33
+#: ../src/Hyyan/WPI/Views/Admin/support.php:41
 msgid ""
 "If donations i not your thing, please support by rating the plugin on\n"
 "           <a href=\"https://wordpress.org/support/view/plugin-"

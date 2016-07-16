@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?hosted_button_id=YKMDTB62QYJU
 Tags: cms, commerce, e-commerce, e-shop, ecommerce, multilingual, products, shop, woocommerce, polylang, bilingual, international, language, localization, multilanguage, multilingual, translate, translation
 Requires at least: 3.8
 Tested up to: 4.5.2
-Stable tag: 1.0.0b
+Stable tag: 1.0.0
 License: MIT
 License URI: https://github.com/decarvalhoaa/woopoly/blob/master/LICENSE
 
