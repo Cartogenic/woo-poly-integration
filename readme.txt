@@ -16,7 +16,7 @@ This plugin makes it possible to run multilingual e-commerce sites using
 WooCommerce and Polylang.
 
 This is a fork of the [Hyyan WooCommerce Polylang Integration](https://wordpress.org/plugins/woo-poly-integration/)
-develop by Hyyan that is no longer mantained since v0.25. Credit goes entirely to
+develop by Hyyan that is no longer mantained. Credit goes entirely to
 Hyyan for this great plugin.
 
 = Features  =
@@ -112,6 +112,8 @@ Make sure to setup your permalinks in the admin backend.
 
 * Fix: Attribute selection language and attribute sync bug (#2, #16)
 * Fix: Fatal error on cart page if not all translations are available (#18)
+* Fix: Plugin activates/don't auto-deactive if dependencies are not met (#19)
+* Tweak: Add action links to settings and support
 
 = 1.0.0b (Beta) =
 
@@ -145,4 +147,4 @@ First release for wordpress.org
 = 1.0.0 =
 
 Please deactivate Hyyan WooCommerce Polylang Intgeration plugin, if installed, before
-cativating WooPoly.
+activating WooPoly.

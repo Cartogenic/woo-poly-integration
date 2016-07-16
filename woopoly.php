@@ -173,7 +173,9 @@ final class WooPoly {
     /**
      * Setup all the things
      *
-     * @return void
+     * @access  public
+     * @since   1.0.0
+     * @return	void
      */
     public function setup() {
 		// Define constants

@@ -2,7 +2,8 @@
 
 * Fix: Attribute selection language and attribute sync bug (#2, #16)
 * Fix: Fatal error on cart page if not all translations are available (#18)
-
+* Fix: Plugin activates/don't auto-deactive if dependencies are not met (#19)
+* Tweak: Add action links to settings and support
 
 ###1.0.0b (Beta)
 

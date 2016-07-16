@@ -3,7 +3,7 @@
 This Wordpress plugin makes it possible to run multilingual e-commerce sites using WooCommerce and Polylang.
 
 This is a fork of the [Hyyan WooCommerce Polylang Integration](https://wordpress.org/plugins/woo-poly-integration/)
-develop by Hyyan that is no longer mantained since v0.25. Credit goes entirely
+develop by Hyyan that is no longer mantained. Credit goes entirely
 to Hyyan for this great plugin.
 
 ## Features

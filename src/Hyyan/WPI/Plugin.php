@@ -28,13 +28,39 @@ class Plugin
         // Register flash messages
         FlashMessages::register();
 
-        // Activate plugin
+        // Init plugin
         add_action('init', array($this, 'activate'));
 
         // Load textdomain
         $this->loadTextDomain();
 
+        // Add action links
+		add_filter( 'plugin_action_links_' . plugin_basename( WOOPOLY_FILE ), array( $this, 'add_action_links' ), 10, 4 );
+
     }
+
+    /**
+     * Add action links.
+     *
+     * @access  public
+     * @since   1.0.0
+     * @param	array	$actions        Array of action links
+     * @param	string	$plugin_file    Path to the plugin file
+     * @param	array	$plugin_data    An array of plugin data
+     * @param	string	$context        The plugin context. Defaults are 'All', 'Active', 'Inactive', 'Recently Activated', 'Upgrade', 'Must-Use', 'Drop-ins', 'Search'.
+     * @return 	array	Modified array of links
+     */
+    public function add_action_links( $actions, $plugin_file, $plugin_data, $context ) {
+		$settings 	= array( 'settings' => '<a href="options-general.php?page=woopoly">' . __('Settings', 'woopoly') . '</a>' );
+		$support	= array( 'support'	=> '<a href="https://wordpress.org/support/plugin/woopoly" target="_blank">' . __('Support', 'woopoly') . '</a>' );
+        $github 	= array( 'github'	=> '<a href="https://github.com/decarvalhoaa/woopoly" target="_blank">' . __('GitHub', 'woopoly') . '</a>' );
+
+        $actions = array_merge( $github, $actions );
+        $actions = array_merge( $support, $actions );
+        $actions = array_merge( $settings, $actions );
+
+        return $actions;
+	}
 
     /**
      * Load plugin language file
