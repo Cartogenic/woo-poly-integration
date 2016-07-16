@@ -27,19 +27,19 @@ class Cart {
      * Construct object
      */
     public function __construct() {
-        // handle add to cart
+        // Handle add to cart
         add_filter( 'woocommerce_add_to_cart_product_id', array( $this, 'add_to_cart' ), 10, 1 );
 
-        // handle cart translation
+        // Handle cart translation
         add_filter( 'woocommerce_cart_item_product', array( $this, 'translate_cart_item_product' ), 10, 2 );
         add_filter( 'woocommerce_cart_item_product_id', array( $this, 'translate_cart_item_product_id' ), 10, 1 );
         add_filter( 'woocommerce_cart_item_permalink', array( $this, 'translate_cart_item_permalink' ), 10, 2 );
         add_filter( 'woocommerce_get_item_data', array( $this, 'translate_cart_item_data' ), 10, 2 );
 
-        // handle the update of cart widget when language is switched
-        add_action( 'wp_enqueue_scripts', array( $this, 'replaceCartFragmentsScript' ), 100 );
+        // Handle the update of cart widget when language is switched
+        add_action( 'wp_enqueue_scripts', array( $this, 'replace_cart_fragments_script' ), 100 );
 
-        // Costum 'add to cart' handler for variable products
+        // Custom 'add to cart' handler for variable products
         add_filter( 'woocommerce_add_to_cart_handler', array( $this, 'set_add_to_cart_handler' ), 10, 2 );
         add_action( 'woocommerce_add_to_cart_handler_' . self::ADD_TO_CART_HANDLER_VARIABLE, array( $this, 'add_to_cart_handler_variable' ), 10, 1 );
 
@@ -51,22 +51,21 @@ class Cart {
      * The function will make sure that products won't be duplicated for each
      * language
      *
-     * @param integer $ID the current product ID
+     * @param integer   $id the current product id
      *
-     * @return integer the final product ID
+     * @return integer  The final product id
      */
-    public function add_to_cart( $ID ) {
-
-        $result = $ID;
+    public function add_to_cart( $id ) {
+        $result = $id;
 
         // get the product translations
-        $IDS = Utilities::getProductTranslationsArrayByID( $ID );
+        $ids = Utilities::getProductTranslationsArrayByID( $id );
 
         // check if any of product's translation is already in cart
         foreach ( WC()->cart->get_cart() as $values ) {
             $product = $values['data'];
 
-            if ( in_array( $product->id, $IDS ) ) {
+            if ( in_array( $product->id, $ids ) ) {
                 $result = $product->id;
                 break;
             }
@@ -85,7 +84,6 @@ class Cart {
      * @return \WC_Product|\WC_Product_Variation
      */
     public function translate_cart_item_product( $cart_item_data, $cart_item ) {
-
         $cart_product_id   = isset( $cart_item['product_id'] ) ? $cart_item['product_id'] : 0;
         $cart_variation_id = isset( $cart_item['variation_id'] ) ? $cart_item['variation_id'] : 0;
 
@@ -112,7 +110,7 @@ class Cart {
      * Replace products id in cart with id of product translation in the current
      * language
      *
-     * @param int       $cart_product_id    Product Id
+     * @param int   $cart_product_id    Product Id
      *
      * @return int Id of the product translation
      */
@@ -130,8 +128,6 @@ class Cart {
      * @return string   Translated permalink
      */
     public function translate_cart_item_permalink( $item_permalink, $cart_item ) {
-
-        //$cart_product_id   = isset( $cart_item['product_id'] ) ? $cart_item['product_id'] : 0;
         $cart_variation_id = isset( $cart_item['variation_id'] ) ? $cart_item['variation_id'] : 0;
 
         If ( $cart_variation_id !== 0 ) {
@@ -141,7 +137,6 @@ class Cart {
         }
 
         return $item_permalink;
-
     }
 
     /**
@@ -150,18 +145,28 @@ class Cart {
      * @param array     $item_data      Variation attributes
      * @param array     $cart_item      Cart item
      *
-     * @return array   Translated attaributes
+     * @return array   Translated attributes
      */
     public function translate_cart_item_data( $item_data, $cart_item ) {
+        // We don't translate the variation attributes if the product in the cart
+        // is not a product variation, and in case of a product variation, it
+        // doesn't have a translation in the current language.
+        $cart_variation_id = isset( $cart_item['variation_id'] ) ? $cart_item['variation_id'] : 0;
+
+        if ( $cart_variation_id == 0 ) {
+            // Not a variation product
+            return $item_data;
+        } elseif ( $cart_variation_id != 0  && false == $this->get_variation_translation( $cart_variation_id ) ) {
+            // Variation product without translation in current language
+            return $item_data;
+        }
 
         $item_data_translation = array();
 
         foreach ( $item_data as $data ) {
-
             $term_id = null;
 
             foreach ( $cart_item['variation'] as $tax => $term_slug ) {
-
                 $tax  = str_replace( 'attribute_', '', $tax );
                 $term = get_term_by( 'slug', $term_slug, $tax );
 
@@ -172,15 +177,12 @@ class Cart {
             }
 
             if ( $term_id !== 0 && $term_id !== null ) {
-
                 // Product attribute is a taxonomy term - check if Polylang has a translation
                 $term_id_translation = pll_get_term( $term_id );
 
                 if ( $term_id_translation == $term_id ) {
-
                     // Already showing the attribute (term) in the correct language
                     $item_data_translation[] = $data;
-
                 } else {
                     // Get term translation from id
                     $term_translation = get_term( $term_id_translation );
@@ -189,14 +191,10 @@ class Cart {
 
                     $item_data_translation[] = array( 'key' => $data['key'], 'value' => ! $error ? $term_translation->name : $data['value'] ); // On error return same
                 }
-
             } else {
-
                 // Product attribute is post metadata and not translatable - return same
                 $item_data_translation[] = $data;
-
             }
-
         }
 
         return ! empty( $item_data_translation ) ? $item_data_translation : $item_data;
@@ -207,9 +205,8 @@ class Cart {
      *
      * To update cart widget when language is switched
      */
-    public function replaceCartFragmentsScript() {
-
-        /* remove the orginal wc-cart-fragments.js and register ours */
+    public function replace_cart_fragments_script() {
+        // remove the orginal wc-cart-fragments.js and register ours
         wp_deregister_script( 'wc-cart-fragments' );
         wp_enqueue_script( 'wc-cart-fragments'
                 , plugins_url( 'public/js/Cart.js', WOOPOLY_FILE )

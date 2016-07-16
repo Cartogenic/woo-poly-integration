@@ -4,6 +4,7 @@
 * Fix: Fatal error on cart page if not all translations are available (#18)
 * Fix: Plugin activates/don't auto-deactive if dependencies are not met (#19)
 * Tweak: Add action links to settings and support
+* Tweak: Doesn't translate product variation attributes that don't have translations in current language (#20)
 
 ###1.0.0b (Beta)
 
