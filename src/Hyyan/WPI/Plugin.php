@@ -23,41 +23,36 @@ class Plugin
     /**
      * Construct the plugin
      */
-    public function __construct()
-    {
+    public function __construct() {
 
+        // Register flash messages
         FlashMessages::register();
 
+        // Activate plugin
         add_action('init', array($this, 'activate'));
-        add_action('plugins_loaded', array($this, 'loadTextDomain'));
 
-        /* Registered anyway */
-        new Emails();
+        // Load textdomain
+        $this->loadTextDomain();
+
     }
 
     /**
-     * Load plugin langauge file
+     * Load plugin language file
      */
-    public function loadTextDomain()
-    {
-        load_plugin_textdomain(
-                'woopoly'
-                , false
-                , plugin_basename(dirname(Hyyan_WPI_DIR)) . '/languages'
-        );
+    public function loadTextDomain() {
+        load_plugin_textdomain( 'woopoly', false, plugin_basename( WOOPOLY_DIR ) . '/languages' );
     }
 
     /**
      * Activate plugin
      *
-     * The plugin will register its core if the requirements are full filled , otherwise
+     * The plugin will register its core if the dependencies are met, otherwise
      * it will show an admin error message
      *
      * @return boolean false if plugin can not be activated
      */
-    public function activate()
-    {
-        if (!static::canActivate()) {
+    public function activate() {
+        if ( ! static::canActivate() ) {
             FlashMessages::remove(MessagesInterface::MSG_SUPPORT);
             FlashMessages::add(
                     MessagesInterface::MSG_ACTIVATE_ERROR
@@ -66,6 +61,7 @@ class Plugin
                     , true
             );
 
+            deactivate_plugins( plugin_basename( WOOPOLY_FILE ) );
             return false;
         }
 
@@ -102,15 +98,19 @@ class Plugin
     }
 
     /**
-     * Get current plugin version
+     * Get plugin version
      *
      * @return integer
      */
-    public static function getVersion()
-    {
-        $data = get_plugin_data(Hyyan_WPI_DIR);
+    public static function getVersion() {
+        $version = get_option( WOOPOLY_TOKEN . '-version' );
 
-        return $data['Version'];
+        if ( false != $version ) {
+            return $version;
+        } else {
+            $data = get_plugin_data( WOOPOLY_FILE );
+            return $data['Version'];
+        }
     }
 
     /**
@@ -124,7 +124,7 @@ class Plugin
     public static function getView($name, array $vars = array())
     {
         $result = '';
-        $path = dirname(Hyyan_WPI_DIR) . '/src/Hyyan/WPI/Views/' . $name . '.php';
+        $path = WOOPOLY_DIR . 'src/Hyyan/WPI/Views/' . $name . '.php';
         if (file_exists($path)) {
             ob_start();
             include($path);
@@ -140,6 +140,7 @@ class Plugin
     protected function registerCore()
     {
         new Admin\Settings();
+        new Emails();
         new Cart();
         new Login();
         new Order();

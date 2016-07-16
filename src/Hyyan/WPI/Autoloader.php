@@ -11,7 +11,7 @@
 namespace Hyyan\WPI;
 
 /**
- * Plugin Namespace Autoloader
+ * Plugin namespace autoloader
  *
  * @author Hyyan Abo Fakher <tiribthea4hyyan@gmail.com>
  */
@@ -23,38 +23,34 @@ final class Autoloader
     private $base;
 
     /**
-     * Construct the autoloader class
+     * Construct
      *
-     * @param string $base the base path to use
+     * @param string $base the base path
      *
      * @throws \Exception when the autloader can not register itself
      */
-    public function __construct($base)
-    {
+    public function __construct( $base ) {
         $this->base = $base;
-        spl_autoload_register(array($this, 'handle'), true, true);
+        spl_autoload_register( array( $this, 'autoload' ), true, true );
     }
 
     /**
-     * Handle autoloading
+     * Handles autoloading
      *
-     * @param string $className class or inteface name
+     * @param string $class_name class or inteface name
      *
-     * @return boolean true if class or interface exists , false otherwise
+     * @return boolean true if class or interface exists, false otherwise
      */
-    public function handle($className)
+    public function autoload( $class_name )
     {
-        if (stripos($className, "Hyyan\WPI") === false) {
+        if ( stripos( $class_name, 'Hyyan\WPI' ) === false ) {
             return;
         }
 
-        $filename = $this->base . str_replace('\\', '/', $className) . ".php";
-        if (file_exists($filename)) {
-            require_once($filename);
-            if (
-                    class_exists($className) ||
-                    interface_exists($className)
-            ) {
+        $filename = $this->base . str_replace( '\\', '/', $class_name ) . '.php';
+        if ( file_exists( $filename ) ) {
+            require_once( $filename );
+            if ( class_exists( $class_name ) || interface_exists( $class_name ) ) {
                 return true;
             }
         }

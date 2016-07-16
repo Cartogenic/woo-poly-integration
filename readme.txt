@@ -117,7 +117,8 @@ Make sure to setup your permalinks in the admin backend.
 
 First release for wordpress.org
 
-== Fixed from Hyyan WooCommerce Polylang Integration plugin ==
+== Fixed from Hyyan WooCommerce Polylang Integration plugin (v0.25) ==
+
 * Dev: Added support for WooCommerce 2.6
 * Dev: Improvements to WordPress Coding Standards and code documentation
 * Dev: Change of plugin name, root dir and textdomian for submission to wordpress.org
@@ -138,3 +139,10 @@ First release for wordpress.org
 * Fix: Duplicator class PHP notice when product is being edited in quick mode
 * Fix: Random behaviour for product type sync
 * Fix: Tax class are not synced
+
+== Upgrade Notice ==
+
+= 1.0.0 =
+
+Please deactivate Hyyan WooCommerce Polylang Intgeration plugin, if installed, before
+cativating WooPoly.

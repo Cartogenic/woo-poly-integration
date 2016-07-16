@@ -39,7 +39,7 @@ if (!defined('ABSPATH')) {
             <p>
                 <?php
                 _e(
-                   'If you found this plugin useful, please write a few words about it
+                   'If you find this plugin useful, please write a few words about it
                    at the <a target="_blank" href="https://wordpress.org/support/view/plugin-reviews/woo-poly-integration">wordpress.org</a>
                    or <a target="_blank" href="https://twitter.com">twitter</a>. It will
                    help other people find this plugin more quickly.<br><br>

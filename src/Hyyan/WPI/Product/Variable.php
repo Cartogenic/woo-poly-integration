@@ -340,7 +340,7 @@ class Variable
             wp_enqueue_script('jquery-ui-dialog');
             wp_enqueue_script(
                     'woo-poly-variables'
-                    , plugins_url('public/js/Variables.js', Hyyan_WPI_DIR)
+                    , plugins_url('public/js/Variables.js', WOOPOLY_FILE )
                     , array('jquery', 'jquery-ui-core', 'jquery-ui-dialog')
                     , \Hyyan\WPI\Plugin::getVersion()
                     , true

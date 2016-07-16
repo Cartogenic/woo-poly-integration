@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 <h3><?php _e( 'WooPoly Plugin', 'woopoly' ); ?></h3>
 <p>
     <?php
-    _e( 'This plugin requires WooCommerce and Polylang plugins', 'woopoly' );
+    _e( 'WooPoly Plugin has deactivated itself because WooCommerce and/or Polylang are no longer active. Please install and activate both plugins before activating this plugin.', 'woopoly' );
     ?>
 <p>
 <hr>

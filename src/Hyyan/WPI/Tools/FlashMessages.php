@@ -19,7 +19,7 @@ final class FlashMessages
 {
 
     /**
-     * Register the falsh messages
+     * Register the flash messages
      */
     public static function register()
     {

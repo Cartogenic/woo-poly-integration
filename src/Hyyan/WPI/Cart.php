@@ -212,7 +212,7 @@ class Cart {
         /* remove the orginal wc-cart-fragments.js and register ours */
         wp_deregister_script( 'wc-cart-fragments' );
         wp_enqueue_script( 'wc-cart-fragments'
-                , plugins_url( 'public/js/Cart.js', Hyyan_WPI_DIR )
+                , plugins_url( 'public/js/Cart.js', WOOPOLY_FILE )
                 , array( 'jquery', 'jquery-cookie' )
                 , Plugin::getVersion()
                 , true
