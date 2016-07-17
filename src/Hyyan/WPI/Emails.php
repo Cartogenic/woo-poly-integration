@@ -36,7 +36,7 @@ class Emails
             add_filter('plugin_locale', array($this, 'correctLocale'), 100);
 
             // Register woocommerce email subjects and headings in polylang strings translations table
-            add_action('plugins_loaded', array( $this, 'register_email_strings_for_translation' ) ); // called only after all plugins are loaded
+            $this->register_email_strings_for_translation(); // called only after all plugins are loaded
 
             // Translate Woocommerce email subjects and headings to the order language
             // new order

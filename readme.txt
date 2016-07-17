@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?hosted_button_id=YKMDTB62QYJU
 Tags: cms, commerce, e-commerce, e-shop, ecommerce, multilingual, products, shop, woocommerce, polylang, bilingual, international, language, localization, multilanguage, multilingual, translate, translation
 Requires at least: 3.8
 Tested up to: 4.5.2
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: MIT
 License URI: https://github.com/decarvalhoaa/woopoly/blob/master/LICENSE
 
@@ -107,6 +107,10 @@ Make sure to setup your permalinks in the admin backend.
 6. Control plugin features from its admin page
 
 == Changelog ==
+
+= 1.0.1 =
+
+* Fix: Some emails not sent in the correct language
 
 = 1.0.0 =
 

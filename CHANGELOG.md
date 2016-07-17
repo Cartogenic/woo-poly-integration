@@ -1,3 +1,7 @@
+###1.0.1
+
+* Fix: Some emails not sent in the correct language
+
 ###1.0.0
 
 * Fix: Attribute selection language and attribute sync bug (#2, #16)
