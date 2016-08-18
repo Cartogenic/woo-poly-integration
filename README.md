@@ -1,5 +1,9 @@
 # [WooPoly](https://github.com/decarvalho/woopoly/)
 
+** Update 18/08/2016: ** Hyyan has resume development of his plugin. My focus from now on is to port the but fixes
+to his plugin version, so that they can be made accessible to all users via Wordpress reporsitory. Therefore,
+** _I don't plan to continue to develop further this fork. The 1.0.2 is the last release._ **
+
 This Wordpress plugin makes it possible to run multilingual e-commerce sites using WooCommerce and Polylang.
 
 This is a fork of the [Hyyan WooCommerce Polylang Integration](https://wordpress.org/plugins/woo-poly-integration/)

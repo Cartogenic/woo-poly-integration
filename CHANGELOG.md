@@ -1,3 +1,7 @@
+###1.0.2
+
+* Fix: woopoly disables payment gateway changes (#23)
+
 ###1.0.1
 
 * Fix: Some emails not sent in the correct language
