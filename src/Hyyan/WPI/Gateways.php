@@ -120,6 +120,10 @@ class Gateways
      */
     public function load_payment_gateways_extentions() {
 
+        // Remove the gateway construct actions to avoid duplications
+        //add_action( 'init', array( $this, 'remove_gateway_actions' ), 100 );
+        $this->remove_gateway_actions();
+            
         foreach ( $this->enabled_gateways as $gateway ) {
             switch ( $gateway->id ) {
                 case 'bacs':
@@ -135,9 +139,6 @@ class Gateways
                     break;
             }
 
-            // Remove the gateway construct actions to avoid duplications
-            add_action( 'init', array( $this, 'remove_gateway_actions' ), 100 );
-
             // Allows other plugins to load payment gateways class extentions or change the gateway object
             do_action( HooksInterface::GATEWAY_LOAD_EXTENTION . $gateway->id, $gateway, $this->enabled_gateways );
         }
@@ -152,7 +153,6 @@ class Gateways
         foreach ( $this->enabled_gateways as $gateway ) {
             remove_action( 'woocommerce_email_before_order_table', array( $gateway, 'email_instructions' ) );
             remove_action( 'woocommerce_thankyou_' . $gateway->id, array( $gateway, 'thankyou_page' ) );
-            remove_action( 'woocommerce_update_options_payment_gateways_' . $gateway->id, array( $gateway, 'process_admin_options' ) );
 
             if ( 'bacs' == $gateway->id ) {
                 remove_action( 'woocommerce_update_options_payment_gateways_' . $gateway->id, array( $gateway, 'save_account_details' ) );
